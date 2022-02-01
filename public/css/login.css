@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+
+* {
+
+    --almost-black: #2d2d2d;
+
+    box-sizing: border-box;
+    margin: 0;
+
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+
+    color: var(--almost-black);
+}
+/* Mobile: */
+@media only screen and (max-width: 600px) {
+
+    body {
+        text-align: center;
+    }
+
+    body section:first-child {
+        display: none;
+    }
+
+
+    p, a {
+        color: rgba(45, 45, 45, 0.68);
+    }
+
+
+    /* Main: */
+    h2 {
+        font-size: 2rem;
+        font-weight: 500;
+
+        margin: 4rem 0;
+    }
+
+
+    form {
+        padding: 0 1rem;
+        width: 100%;
+        margin: 5rem auto 0 auto;
+    }
+
+
+    form div {
+        margin: 0.4rem 0;
+        position: relative;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        width: 100%;
+
+    }
+
+    #eye, #letter, #lock {
+        position: absolute;
+    }
+
+    #letter, #lock {
+        left: 0.5rem;
+    }
+
+    #eye {
+        right: 0.5rem;
+        cursor: pointer;
+    }
+
+
+    form div input {
+        outline: none;
+        padding: 0.4rem 2rem;
+
+        width: 100%;
+    }
+
+    input[type='submit'] {
+        margin: 2rem 0;
+        padding: 0.4rem 2rem;
+
+        outline: none;
+        width: 100%;
+
+        font-weight: 500;
+        color: white;
+
+        background-color: #2d2d2d;
+        border: none;
+
+        box-shadow: 2px 2px 5px black;
+    }
+
+    /* Footer: */
+    footer {
+        display: none;
+    }
+
+    .invisible {
+        visibility: hidden;
+    }
+
+}
+
+
+/* Desktop: */
+@media only screen and (min-width: 1024px) {
+
+    body {
+        width: 100%;
+        height: 100vh;
+    }
+
+    main {
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        width: 100%;
+        height: 100%;
+    }
+
+    main section:first-child {
+        background-color: var(--almost-black);
+    }
+
+    main section:last-child {
+        text-align: center;
+    }
+
+    section {
+        padding: 2rem;
+        width: 50%;
+    }
+
+    .invisible {
+        visibility: hidden;
+    }
+
+    h2 {
+        font-size: 3rem;
+        font-weight: 500;
+        margin: 5rem 0 4rem 0;
+    }
+
+    form {
+        width: min-content;
+        margin: auto;
+    }
+
+    form div input {
+        padding: 0.4rem 2rem;
+    }
+
+    form div {
+        position: relative;
+        width: min-content;
+        display: flex;
+        align-items: center;
+
+        margin: 0.4rem 0;
+    }
+
+    input[type="submit"] {
+        margin: 2rem 0 1rem 0;
+        width: 100%;
+        padding: 0.4rem;
+        background-color: var(--almost-black);
+        box-shadow: 2px 2px 5px black;
+        font-weight: 500;
+        color: white;
+
+        outline: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #1c1c1c;
+    }
+
+
+    #eye, #letter, #lock {
+        position: absolute;
+    }
+
+    #letter, #lock {
+        left: 0.5rem;
+    }
+
+    #eye {
+        right: 0.5rem;
+        cursor: pointer;
+    }
+
+
+}

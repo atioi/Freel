@@ -1,38 +1,56 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <!-- General:   -->
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+
+    <title>Freely</title>
+
+    <!-- Remote:  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+
+    <!-- Style:   -->
+    <link rel="stylesheet" type="text/css" href="/public/css/login.css">
+
 </head>
 <body>
 
-<nav>
-    <h1>Freely</h1>
-</nav>
 <main>
+    <section>
 
-    <h2>LOGIN</h2>
+    </section>
 
-    <form action="/login" method="POST">
-        <div>
-            <label for="login"></label>
-            <input id="email" name="email" placeholder="Email" type="email" required>
-        </div>
+    <section>
+        <h2>LOGIN</h2>
 
-        <div>
-            <label for="password"></label>
-            <input id="password" name="password" placeholder="Password" type="password" required>
-        </div>
+        <form action="/login" method="POST">
+            <div>
+                <label for="login"></label>
+                <i class="material-icons" id="letter">mail_outline</i>
+                <input id="email" name="email" placeholder="Email" type="email" required>
+            </div>
 
-        <input type="submit" value="LOGIN">
-    </form>
+            <div>
+                <label for="password"></label>
+                <i class="material-icons" id="lock">lock</i>
+                <input id="password" name="password" placeholder="Password" type="password" required>
+                <i class="material-icons invisible" id="eye">visibility_off</i>
+            </div>
+
+            <input type="submit" value="LOGIN">
+        </form>
+
+        <p>or <a href="/register">Create Account</a></p>
+    </section>
+
 
 </main>
-<footer>
 
-</footer>
+<script src="/public/scripts/login.js"></script>
+
 </body>
 </html>
