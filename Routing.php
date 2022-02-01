@@ -1,5 +1,8 @@
 <?php
 
+require "./src/controllers/ViewController.php";
+
+
 class Routing
 {
 
