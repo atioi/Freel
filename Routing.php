@@ -28,7 +28,9 @@ class Routing
             if (!array_key_exists($action, self::$routes[$method]))
                 throw new Exception("There is no defined action");
 
-            echo self::$routes[$method][$action];
+            $controller_name = self::$routes[$method][$action];
+            $controller = new $controller_name;
+            $controller->$action();
 
         } catch (Exception $e) {
             http_response_code(404);
