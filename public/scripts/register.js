@@ -186,6 +186,17 @@ async function register(event) {
             confirmation: confirmation.value
         };
 
+
+        const response = await fetch('/register', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: user
+        })
+
+        console.log(response);
+
     } catch (e) {
         console.error(e.message);
     }

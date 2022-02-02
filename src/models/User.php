@@ -7,13 +7,15 @@ class User
     private $surname;
     private $email;
     private $login;
+    private $password;
 
-    public function __construct($name, $surname, $email, $login)
+    public function __construct($name, $surname, $login, $email, $password)
     {
         $this->name = $name;
         $this->surname = $surname;
         $this->email = $email;
         $this->login = $login;
+        $this->password = $password;
     }
 
     /**
@@ -46,6 +48,14 @@ class User
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPassword()
+    {
+        return $this->password;
     }
 
 }
