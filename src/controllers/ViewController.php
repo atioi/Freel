@@ -5,7 +5,8 @@ require "AppController.php";
 class ViewController extends AppController
 {
 
-    public function index(){
+    public function index()
+    {
         $this->render("index");
     }
 
@@ -13,6 +14,12 @@ class ViewController extends AppController
     {
         $this->render("login");
     }
+
+    public function register()
+    {
+        $this->render("register");
+    }
+
 
 }
 
