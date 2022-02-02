@@ -3,14 +3,16 @@
 require_once 'Repository.php';
 require_once 'src/models/User.php';
 
-
 class UserRepository extends Repository
 {
+
+    const MESSAGES = [
+        23505 => 'Email or login already exists.'
+    ];
+
     public function saveUser(User $user)
     {
         $this->database->connect();
-
-
         $stmt = $this->database->connect()->prepare(
             'INSERT INTO users (name, surname, login, email, password) VALUES(?, ?, ?, ?, ?);'
         );
@@ -25,8 +27,8 @@ class UserRepository extends Repository
                 $user->getPassword()
             ]);
 
-        } catch (Exception $e) {
-            echo $e->getMessage();
+        } catch (PDOException $e) {
+            # FIXME: Add better exception!
         }
 
     }

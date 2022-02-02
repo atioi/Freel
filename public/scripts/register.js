@@ -124,6 +124,10 @@ function arePasswordsEqual(p1, p2) {
     return p1.value === p2.value;
 }
 
+function isValidEmail(email) {
+
+}
+
 
 function isEverythingValid() {
 
@@ -163,6 +167,7 @@ function isEverythingValid() {
         errors.push('Password are not equal!');
     }
 
+
     return !errors.length;
 }
 
@@ -192,10 +197,9 @@ async function register(event) {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: user
-        })
+            body: JSON.stringify(user)
+        });
 
-        console.log(response);
 
     } catch (e) {
         console.error(e.message);
