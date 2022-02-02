@@ -63,7 +63,7 @@
                     <label for="password"></label>
                     <input id="password" name="password" placeholder="Password" type="password" maxlength="50">
                     <i class="material-icons Error-Outline" id="error-outline-password">error_outline</i>
-                    <i class="material-icons Visibility" >visibility_off</i>
+                    <i class="material-icons Visibility">visibility_off</i>
                 </div>
 
                 <!-- Confirm Password -->
@@ -71,10 +71,10 @@
                     <label for="confirm"></label>
                     <input id="confirm" name="confirm" placeholder="Confirm password" type="password" maxlength="50">
                     <i class="material-icons Error-Outline" id="error-outline-confirm">error_outline</i>
-                    <i class="material-icons Visibility" >visibility_off</i>
+                    <i class="material-icons Visibility">visibility_off</i>
                 </div>
 
-                <p id="error"></p>
+                <p id="message"></p>
 
                 <input type="submit" value="CREATE">
 

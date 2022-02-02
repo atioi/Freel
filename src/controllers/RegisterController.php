@@ -36,6 +36,8 @@ class RegisterController
             $userRepository = new UserRepository();
             $userRepository->saveUser($user);
 
+            echo '';
+
         } catch (Exception $exception) {
 
         }
