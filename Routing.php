@@ -1,7 +1,7 @@
 <?php
 
-require "./src/controllers/ViewController.php";
-require "./src/controllers/RegisterController.php";
+require 'src/controllers/ViewController.php';
+require 'src/controllers/RegisterController.php';
 
 
 class Routing
