@@ -1,60 +1,5 @@
-//
-// password.onkeyup = visibility;
-// confirmation.onkeyup = visibility;
-//
-//
-// function visibility(event) {
-//     event.preventDefault();
-//
-//     console.log(event.key);
-//     if (event.key !== 'Enter') {
-//         if (event.target.classList.contains('Required')) {
-//             event.target.classList.remove('Required');
-//             const error_outline = event.target.parentElement.getElementsByClassName('Error-Outline').item(0);
-//             error_outline.setAttribute('style', 'visibility: hidden;');
-//
-//         }
-//
-//
-//         const eye = event.target.parentElement.getElementsByClassName('Visibility').item(0);
-//
-//         if (event.target.value.length) {
-//             eye.innerHTML = 'visibility_off';
-//             event.target.type = 'password';
-//             eye.setAttribute('style', 'visibility: visible');
-//         }
-//
-//         if (!event.target.value.length)
-//             eye.setAttribute('style', 'visibility: hidden');
-//
-//         eye.onclick = () => {
-//             eye.innerHTML = eye.innerHTML === 'visibility' ? 'visibility_off' : 'visibility';
-//             event.target.type = event.target.type === 'password' ? 'text' : 'password';
-//         }
-//     }
-//
-//
-// }
-//
-// function required(input) {
-//     if (!input.value.length) {
-//         input.classList.add('Required');
-//         const error_outline = input.parentElement.getElementsByClassName('Error-Outline').item(0);
-//         error_outline.setAttribute('style', 'visibility: visible;');
-//     }
-// }
-//
-//
-// function reset(event) {
-//     event.target.classList.remove('Required');
-//     const error_outline = event.target.parentElement.getElementsByClassName('Error-Outline').item(0);
-//     error_outline.setAttribute('style', 'visibility: hidden;');
-// }
-//
-
-
 const registerForm = document.getElementById('registerForm');
-
+const message = document.getElementById('message');
 const name = document.getElementById('name');
 const surname = document.getElementById('surname');
 const email = document.getElementById('email');
@@ -70,8 +15,9 @@ login.onkeydown = reset;
 password.onkeyup = removePasswordOption;
 confirmation.onkeyup = removePasswordOption;
 
-password.onkeydown = addPasswordOption;
-confirmation.onkeydown = addPasswordOption;
+
+password.oninput = addPasswordOption;
+confirmation.oninput = addPasswordOption;
 
 
 function addPasswordOption(event) {
@@ -115,17 +61,48 @@ function isRequired(element) {
     error_outline.setAttribute('style', 'visibility: visible;');
 }
 
+registerForm.onsubmit = register;
 
-function isEmpty(element) {
-    return !element.value.length;
+async function register(event) {
+    event.preventDefault();
+
+    try {
+
+        if (!validate())
+            throw new Error('Invalid data typed!');
+
+        const user = {
+            name: name.value,
+            surname: surname.value,
+            login: login.value,
+            email: email.value,
+            password: password.value,
+            confirmation: confirmation.value
+        };
+
+
+        const response = await fetch('/register', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(user)
+        });
+
+        registerForm.reset();
+
+        message.innerText = 'Account created successfully.'
+
+
+    } catch (e) {
+        console.error(e.message);
+    }
+
 }
 
-function arePasswordsEqual(p1, p2) {
-    return p1.value === p2.value;
-}
+// Data validating:
 
-
-function isEverythingValid() {
+function validate() {
 
     const errors = [];
 
@@ -163,44 +140,35 @@ function isEverythingValid() {
         errors.push('Password are not equal!');
     }
 
+    if (!isStrongPassword(password)) {
+        errors.push('Password is too weak!');
+    }
+
+    if (isValidEmail(email)) {
+
+    }
+
+    console.log(errors);
+
     return !errors.length;
+
 }
 
 
-registerForm.onsubmit = register;
+function isEmpty(element) {
+    return !element.value.length;
+}
 
-async function register(event) {
-    event.preventDefault();
+function arePasswordsEqual(p1, p2) {
+    return p1.value === p2.value;
+}
 
-    try {
+function isStrongPassword(password) {
+    const regex = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/)
+    return regex.test(password.value)
+}
 
-        if (!isEverythingValid())
-            throw new Error('Invalid data typed!');
-
-        const user = {
-            name: name.value,
-            surname: surname.value,
-            login: login.value,
-            email: email.value,
-            password: password.value,
-            confirmation: confirmation.value
-        };
-
-
-        const response = await fetch('/register', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: user
-        })
-
-        console.log(response);
-
-    } catch (e) {
-        console.error(e.message);
-    }
-
-
+function isValidEmail(email) {
+    return true;
 }
 
