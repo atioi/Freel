@@ -12,6 +12,9 @@ $action = $action == "" ? "index" : $action;
 
 Routing::get("index", "ViewController");
 Routing::get("login", "ViewController");
+Routing::get("register", "ViewController");
+
+Routing::post("register", "RegisterController");
 
 
 Routing::run($action);

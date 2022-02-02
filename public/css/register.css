@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+
+* {
+
+    --almost-black: #2d2d2d;
+
+    box-sizing: border-box;
+    margin: 0;
+
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+
+    color: var(--almost-black);
+}
+
+.Visibility {
+    visibility: hidden;
+    position: absolute;
+    right: 0.5rem;
+    cursor: pointer;
+}
+
+
+.Error-Outline {
+    position: absolute;
+    right: 0.5rem;
+    color: red;
+    visibility: hidden;
+}
+
+
+
+
+.Required {
+    border: 1px solid red;
+}
+
+.Required::placeholder {
+    color: red;
+}
+
+
+
+/* Phones */
+@media only screen and (max-width: 400px) {
+
+    body {
+        width: 100%;
+        height: 100vh;
+    }
+
+    main {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    main section:first-child {
+        display: none;
+    }
+
+    main section:last-child {
+        text-align: center;
+    }
+
+
+    h2 {
+        font-size: 2rem;
+        font-weight: 500;
+        margin: 1rem 0 2rem 0;
+
+    }
+
+
+    form div {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        margin: 0.4rem auto;
+        width: 100%;
+    }
+
+
+    form div input {
+        padding: 0.4rem 2rem 0.4rem 1rem;
+        width: 100%;
+        outline: none;
+
+    }
+
+    input[type="submit"] {
+        margin: 2rem 0 1rem 0;
+        width: 100%;
+        padding: 0.4rem;
+        background-color: var(--almost-black);
+        box-shadow: 2px 2px 5px black;
+        font-weight: 500;
+        color: white;
+
+        outline: none;
+        border: none;
+        cursor: pointer;
+    }
+
+
+}
+
+/* Tablets */
+@media only screen and (min-width: 401px) and (max-width: 1023px) {
+    body {
+        width: 100%;
+        height: 100vh;
+    }
+
+    main {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    main section:first-child {
+        display: none;
+    }
+
+    main section:last-child {
+        text-align: center;
+    }
+
+
+    h2 {
+        font-size: 2rem;
+        font-weight: 500;
+        margin: 1rem 0 2rem 0;
+
+    }
+
+
+    form div {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        margin: 0.4rem auto;
+        width: 100%;
+    }
+
+
+    form div input {
+        padding: 0.4rem 2rem 0.4rem 1rem;
+        width: 100%;
+        border: 1px solid black;
+        outline: none;
+
+    }
+
+    input[type="submit"] {
+        margin: 2rem 0 1rem 0;
+        width: 100%;
+        padding: 0.4rem;
+        background-color: var(--almost-black);
+        box-shadow: 2px 2px 5px black;
+        font-weight: 500;
+        color: white;
+
+        outline: none;
+        border: none;
+        cursor: pointer;
+    }
+
+}
+
+/* Desktops */
+@media only screen and (min-width: 1024px) {
+
+    body {
+        height: 100vh;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        font-weight: 500;
+        margin: 5rem 0 3rem 0;
+    }
+
+    main {
+        display: flex;
+        flex-direction: row;
+
+        height: 100%;
+        width: 100%;
+    }
+
+    main section {
+        width: 50%;
+        height: 100%;
+    }
+
+    main section:first-child {
+        background-color: rgba(155, 253, 255, 0.31);
+    }
+
+    main section:last-child {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    main section:last-child {
+        text-align: center;
+    }
+
+
+    main section > div {
+        margin-bottom: 4rem;
+    }
+
+
+    form div {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        margin: 0.4rem auto;
+        width: 100%;
+
+    }
+
+    form div input {
+        padding: 0.4rem 2rem 0.4rem 1rem;
+        width: 100%;
+        outline: none;
+
+    }
+
+    input[type="submit"] {
+        margin: 2rem 0 1rem 0;
+        width: 100%;
+        padding: 0.4rem;
+        background-color: var(--almost-black);
+        box-shadow: 2px 2px 5px black;
+        font-weight: 500;
+        color: white;
+
+        outline: none;
+        border: none;
+        cursor: pointer;
+    }
+
+}
+

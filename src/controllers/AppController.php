@@ -5,7 +5,7 @@ class AppController
 
     protected function render($view = null, array $variables = [])
     {
-        $path = './public/views/' . $view . '.php';
+        $path = 'public/views/' . $view . '.php';
         $output = '404';
 
         if (file_exists($path)) {
