@@ -21,7 +21,6 @@
 
 <main>
     <section>
-
     </section>
 
     <section>
