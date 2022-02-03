@@ -63,7 +63,8 @@ const upload = new Option(document.getElementById('upload'), () => {
     const form = new Form();
     root.append(form.render());
     main.append(root);
-    createMap();
+    const map = new Mapbox();
+    uploadItems(map);
 });
 
 const dashboard = new Option(document.getElementById('dashboard'), () => {

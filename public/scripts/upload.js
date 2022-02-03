@@ -5,6 +5,7 @@ class Form {
         this.form.action = '/upload';
         this.form.method = 'POST';
         this.form.id = 'upload-form';
+
         const photos = document.createElement('div');
         photos.className = 'Photo-Inputs';
 
@@ -22,6 +23,7 @@ class Form {
 
         const description = document.createElement('textarea');
         description.className = 'Description';
+        description.id = 'description';
 
         const text_inputs = document.createElement('div');
         text_inputs.append(title.render())

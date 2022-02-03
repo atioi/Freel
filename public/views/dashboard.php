@@ -70,7 +70,7 @@
 <script src="/public/scripts/mapbox.js"></script>
 <script src="/public/scripts/upload.js"></script>
 <script src="/public/scripts/dashboard.js"></script>
-<script src="/public/scripts/upload-form.js"></script>
+<script src="/public/scripts/uploadForm.js"></script>
 
 </body>
 </html>
