@@ -90,27 +90,24 @@ button {
 }
 
 main {
-    width: 100%;
     height: 100%;
+    width: 100%;
     overflow: scroll;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    overflow-x: hidden;
 }
 
 #root {
     width: 100%;
     height: 100%;
+
 }
 
-#map {
-    width: 15rem;
-    height: 15rem;
-    margin: 1rem 2rem;
-}
-
-.Photo-Inputs {
-    display: flex;
-    align-items: start;
-    justify-items: start;
-}
 
 .Photo-Input {
     left: 0;
@@ -124,12 +121,10 @@ main {
 
     cursor: pointer;
     z-index: 1;
-
 }
 
 .Photo-Field {
     position: relative;
-    margin: 0 0.4rem;
     width: 10rem;
     height: 15rem;
     cursor: pointer;
@@ -139,30 +134,22 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
 
-
+.Photo-Field i {
+    position: absolute;
+    z-index: 0;
 }
 
 .Photo-Label {
     display: inline-block;
     cursor: pointer;
 
+    position: absolute;
+    z-index: 0;
 
     width: 100%;
     height: 100%;
-
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem 1rem;
-}
-
-.Title-Field {
-
-    margin: 2rem 0.4rem;
-
 }
 
 .Add-Photo-Alternate {
@@ -179,4 +166,85 @@ form {
 
 .Photo-Field:hover .Add-Photo-Alternate {
     color: black;
+}
+
+.Photo-Inputs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+/* Contains file input and label: */
+.Photo-Field {
+    min-width: 10rem;
+    min-height: 15rem;
+
+    margin: 1rem 1rem 0 0;
+}
+
+.Photo-Field:last-child {
+    margin-right: 0;
+}
+
+/* Form: */
+form {
+    display: flex;
+    flex-direction: column;
+
+    margin: 1rem;
+    max-width: fit-content;
+}
+
+/* Map: */
+#map {
+    min-width: 15rem;
+    min-height: 15rem;
+    margin: 0 1rem;
+}
+
+/* Contains map, title input and textarea:  */
+.Form-Info-Panel {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: start;
+
+    margin: 1rem 0;
+}
+
+/* Contains title input and textarea: */
+.Form-Text-Inputs {
+    padding-right: 1rem;
+    width: 15rem;
+
+}
+
+.Title-Field {
+    width: 15rem;
+    background-color: pink;
+}
+
+.Title-Field input {
+    width: 100%;
+    padding: 0.4rem 1rem;
+    outline: none;
+    border: 1px solid black;
+}
+
+/* Text-area: */
+.Description {
+    resize: none;
+    width: 15rem;
+
+    padding: 0.4rem 1rem;
+    margin: 1rem 0;
+
+    outline: none;
+    border: 1px solid black;
+}
+
+form > div:last-child {
+    background-color: red;
+    text-align: center;
+    padding: 0.4rem 1rem;
 }
