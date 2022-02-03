@@ -55,16 +55,22 @@ class Menu {
 
 }
 
-const upload = new Option(document.getElementById('upload'), () => {
 
+// Menu options:
+
+const upload = new Option(document.getElementById('upload'), () => {
+    root.innerHTML = '';
     const form = new Form();
     root.append(form.render());
     main.append(root);
-    createMap();
-});
-const dashboard = new Option(document.getElementById('dashboard'), () => {
-    alert('dashboard');
+    const map = new Mapbox();
+    uploadItems(map);
 });
 
+const dashboard = new Option(document.getElementById('dashboard'), () => {
+    root.innerHTML = '';
+});
+
+// Menu:
 const menu = new Menu(upload, dashboard);
 

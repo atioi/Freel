@@ -1,10 +1,10 @@
-
 class Form {
     constructor() {
         this.form = document.createElement('form');
 
         this.form.action = '/upload';
         this.form.method = 'POST';
+        this.form.id = 'upload-form';
 
         const photos = document.createElement('div');
         photos.className = 'Photo-Inputs';
@@ -20,23 +20,35 @@ class Form {
         photos.append(photo_4.render());
 
         const title = new TitleField();
+
         const description = document.createElement('textarea');
+        description.className = 'Description';
+        description.id = 'description';
 
-
-        const info = document.createElement('div');
-        info.append(title.render())
-        info.append(description);
+        const text_inputs = document.createElement('div');
+        text_inputs.append(title.render())
+        text_inputs.append(description);
+        text_inputs.className = 'Form-Text-Inputs';
 
         // Map:
         const map = document.createElement('div');
         map.id = 'map';
 
         const bottom = document.createElement('div');
-        bottom.append(info);
+        bottom.append(text_inputs);
         bottom.append(map);
+        bottom.className = 'Form-Info-Panel';
+
+        const submit = document.createElement('input');
+        submit.type = 'submit';
+        submit.value = 'UPLOAD';
+
+        const div = document.createElement('div');
+        div.append(submit);
 
         this.form.append(photos);
         this.form.append(bottom);
+        this.form.append(div);
 
 
     }
