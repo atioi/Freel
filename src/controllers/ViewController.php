@@ -20,6 +20,10 @@ class ViewController extends AppController
         $this->render("register");
     }
 
+    public function dashboard()
+    {
+        $this->render("dashboard");
+    }
 
 }
 
