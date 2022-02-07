@@ -84,11 +84,13 @@ class Mapbox {
     }
 
     geolocate(position) {
-        console.log(position);
         this.coords = [position.coords.longitude, position.coords.latitude];
         this.#marker.setLngLat(this.coords).addTo(this.#map);
     }
 
+    position() {
+        return this.coords === null ? null : {lng: this.coords[0], lat: this.coords[1]}
+    }
 
 }
 

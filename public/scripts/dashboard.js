@@ -1,9 +1,5 @@
 const main = document.getElementById('main');
 
-const header = document.getElementById('header');
-header.onclick = () => {
-    window.location.replace('/');
-}
 
 // This element stores data for each of dashboard options:
 const root = document.createElement('div');
@@ -31,6 +27,10 @@ class Option {
 
     switch(option) {
         this.#status = option === this ? 'on' : 'off';
+        if (this.#status === 'off')
+            this.#element.classList.remove('Chosen');
+        if (this.#status === 'on')
+            this.#element.classList.add('Chosen');
     }
 
     run() {
@@ -56,21 +56,39 @@ class Menu {
 }
 
 
-// Menu options:
+/***************** Dashboard menu's options:  ******************/
+
+
+/********* Upload *********/
 
 const upload = new Option(document.getElementById('upload'), () => {
     root.innerHTML = '';
-    const form = new Form();
-    root.append(form.render());
+    const form = Form();
+    root.append(form);
     main.append(root);
     const map = new Mapbox();
     uploadItems(map);
 });
 
-const dashboard = new Option(document.getElementById('dashboard'), () => {
-    root.innerHTML = '';
-});
 
-// Menu:
-const menu = new Menu(upload, dashboard);
+/********* Logout *********/
+
+const logoutElement = document.getElementById('logout');
+
+const logoutFunction = async function () {
+    const response = await fetch('/logout', {
+        method: 'POST'
+    })
+
+    if (response.ok) {
+        window.location.replace('/');
+    }
+
+};
+
+const logout = new Option(logoutElement, logoutFunction);
+
+// Dashboard menu:
+
+const menu = new Menu(upload, logout);
 

@@ -1,190 +1,247 @@
-class Form {
-    constructor() {
-        this.form = document.createElement('form');
+function Photo(id) {
 
-        this.form.action = '/upload';
-        this.form.method = 'POST';
-        this.form.id = 'upload-form';
+    const photo = document.createElement('div');
+    photo.className = 'photo';
 
-        const photos = document.createElement('div');
-        photos.className = 'Photo-Inputs';
+    const google_icon = GoogleIcon('add_photo_alternate');
 
-        const photo_1 = new PhotoField('photo_1');
-        const photo_2 = new PhotoField('photo_2');
-        const photo_3 = new PhotoField('photo_3');
-        const photo_4 = new PhotoField('photo_4');
+    const input = document.createElement('input');
+    const label = document.createElement('label');
 
-        photos.append(photo_1.render());
-        photos.append(photo_2.render());
-        photos.append(photo_3.render());
-        photos.append(photo_4.render());
+    label.for = id;
+    label.className = 'photo-label';
 
-        const title = new TitleField();
+    input.name = id;
+    input.type = 'file';
+    input.className = 'photo-input'
 
-        const description = document.createElement('textarea');
-        description.className = 'Description';
-        description.id = 'description';
+    photo.append(label);
+    photo.append(input);
+    photo.append(google_icon);
 
-        const text_inputs = document.createElement('div');
-        text_inputs.append(title.render())
-        text_inputs.append(description);
-        text_inputs.className = 'Form-Text-Inputs';
-
-        // Map:
-        const map = document.createElement('div');
-        map.id = 'map';
-
-        const bottom = document.createElement('div');
-        bottom.append(text_inputs);
-        bottom.append(map);
-        bottom.className = 'Form-Info-Panel';
-
-        const submit = document.createElement('input');
-        submit.type = 'submit';
-        submit.value = 'UPLOAD';
-
-        const div = document.createElement('div');
-        div.append(submit);
-
-        this.form.append(photos);
-        this.form.append(bottom);
-        this.form.append(div);
-
-
-    }
-
-    render() {
-        return this.form;
-    }
+    return photo;
 
 }
 
-class PhotoField {
-    constructor(id) {
-        this.field = document.createElement('div');
-        this.field.className = 'Photo-Field';
-        const input = new PhotoInput(id);
-        const label = new Label(null, 'Photo-Lavel', id);
-
-        const i = document.createElement('i');
-        i.className = 'material-icons Add-Photo-Alternate';
-        i.innerText = 'add_photo_alternate'
-
-        this.field.append(i)
-        this.field.append(input.render());
-        this.field.append(label.render());
-    }
-
-    render() {
-        return this.field;
-    }
+function GoogleIcon(name) {
+    const google_icon = document.createElement('i');
+    google_icon.className = `material-icons ${name}`;
+    google_icon.innerHTML = name;
+    return google_icon;
 }
 
-class TitleField {
-    constructor() {
-        this.field = document.createElement('div');
-        this.field.className = 'Title-Field';
-        const input = new Input(null, 'title', 'title', 'text', 'Title', true);
-        const label = new Label(null, null, 'title');
+function Photos() {
+    const photos = document.createElement('div');
+    photos.className = 'photos';
 
-        this.field.append(input.render());
-        this.field.append(label.render());
-    }
+    photos.append(Photo('photo-01'));
+    photos.append(Photo('photo-02'));
+    photos.append(Photo('photo-03'));
+    photos.append(Photo('photo-04'));
+
+    return photos;
+}
+
+function Input(atr) {
+    const input = document.createElement('input');
+    Object.keys(atr).forEach(key => input.setAttribute(key, atr[key]));
+    return input
+}
+
+function Textarea(atr) {
+    const textarea = document.createElement('textarea');
+    Object.keys(atr).forEach(key => textarea.setAttribute(key, atr[key]));
+    return textarea
+}
+
+function Label(atr) {
+    const label = document.createElement('label');
+    Object.keys(atr).forEach(key => label.setAttribute(key, atr[key]));
+    return label
+}
+
+function Title() {
+
+    const input = Input({
+        id: 'title',
+        name: 'title',
+        placeholder: "Title",
+    });
+
+    const label = Label({
+        for: 'title'
+    })
 
 
-    render() {
-        return this.field;
-    }
+    const div = document.createElement('div');
+    div.append(input);
+    div.append(label);
+
+    return div;
+
+}
+
+function Description() {
+
+    const description = Textarea({
+        id: 'description',
+        name: 'description',
+        placeholder: "Description",
+    });
+
+    const label = Label({
+        for: 'description'
+    })
+
+
+    const div = document.createElement('div');
+    div.append(description);
+    div.append(label);
+
+    return div;
+
+}
+
+function Map() {
+    const div = document.createElement('div');
+    div.id = 'map';
+    return div;
+}
+
+function Inputs() {
+    const div = document.createElement('div');
+    const title = Title();
+    const description = Description();
+    div.append(title);
+    div.append(description);
+    return div;
 }
 
 
-class PhotoInput {
+function Form() {
 
-    constructor(id) {
-        this.input = new Input('Photo-Input', id, id, 'file', null, null);
-    }
+    const form = document.createElement('form');
+    form.action = '/upload';
+    form.method = 'POST';
+    form.id = 'upload-form'
 
-    render() {
-        return this.input.render();
+
+    const photos = Photos();
+    form.append(photos);
+
+    const map = Map();
+    const inputs = Inputs();
+
+    const div = document.createElement('div');
+    div.append(inputs);
+    div.append(map);
+
+    const submit = Input({
+        type: 'submit',
+        value: 'UPLOAD'
+    });
+
+
+    form.append(div);
+    form.append(submit);
+
+    return form;
+
+}
+
+
+/*
+* Uploading
+*
+* */
+
+function uploadItems(map) {
+
+
+    const photos = document.getElementsByClassName('photo-input');
+    for (let index in photos) {
+        photos[index].onchange = photoPreview;
     }
+    // photos.forEach(photo => photo.onchange = photoPreview);
+
+    const form = document.getElementById('upload-form');
+    form.onsubmit = (event) => onUpload(event, map);
+
+
+}
+
+function removePhoto(event) {
+    event.preventDefault();
+
+    const parent = event.target.parentElement;
+    const i = parent.getElementsByTagName('i').item(0);
+    i.innerText = 'add_photo_alternate';
+
+    const img = parent.getElementsByTagName('img').item(0);
+    img.remove();
+
+    event.target.type = 'text';
+    event.target.type = 'file';
+    event.target.onchange = photoPreview;
+    event.target.onclick = null;
+
 }
 
 
-class Input {
+// Displays photo inside input:
+function photoPreview(event) {
 
-    constructor(className, id, name, type, placeholder, required) {
-        this.input = document.createElement('input');
-        this.setClass(className);
-        this.setID(id);
-        this.setName(name);
-        this.setType(type);
-        this.setPlaceholder(placeholder);
-        this.required(required);
+    const reader = new FileReader();
+    const parent = event.target.parentElement;
+    const i = parent.getElementsByTagName('i').item(0);
+
+    const img = document.createElement('img');
+
+    reader.onloadend = () => {
+        img.src = `${reader.result}`;
+        i.innerText = 'delete'
+        i.classList.add('Trash');
+        event.target.parentElement.append(img);
     }
 
-    setClass(className) {
-        if (className !== null && className !== undefined)
-            this.input.className = className;
-    }
+    reader.readAsDataURL(event.target.files[0]);
 
-    setID(id) {
-        if (id !== null && id !== undefined)
-            this.input.id = id;
-    }
 
-    setName(name) {
-        if (name !== null && name !== undefined)
-            this.input.name = name;
-    }
-
-    setType(type) {
-        if (type !== null && type !== undefined)
-            this.input.type = type;
-    }
-
-    setPlaceholder(placeholder) {
-        if (placeholder !== null && placeholder !== undefined)
-            this.input.placeholder = placeholder;
-    }
-
-    required(required) {
-
-        if (required === true)
-            this.input.required = true;
-
-        if (required === false)
-            this.input.required = false;
-
-    }
-
-    render() {
-        return this.input;
-    }
+    // Enables photo removing
+    event.target.onclick = removePhoto;
 }
 
-class Label {
 
-    constructor(id, className, forID) {
-        this.label = document.createElement('label');
-    }
+// Validates and sends item to database:
+async function onUpload(event, map) {
 
-    setClass(className) {
-        if (className !== null && className !== undefined)
-            this.label.className = className;
-    }
+    event.preventDefault();
 
-    setID(id) {
-        if (id !== null && id !== undefined)
-            this.label.id = id;
-    }
+    // Coords should be setting:
+    const coords = map.position();
+    console.log(coords);
 
-    setFor(forID) {
-        if (forID !== null && forID !== undefined)
-            this.label.id = forID;
-    }
 
-    render() {
-        return this.label;
-    }
+    const formData = new FormData(event.target);
+
+
+    const title = formData.get('title');
+    const photos = [formData.get('photo_01'), formData.get('photo_02'), formData.get('photo_03'), formData.get('photo_04')];
+
+
+    formData.append('lng', coords.lng);
+    formData.append('lat', coords.lat);
+
+
+    // const response = await fetch('/upload', {
+    //     method: "POST",
+    //     body: formData
+    // });
 
 }
+
+function isEmpty(value) {
+    return value === null || value.trim().length === 0 || value === undefined;
+}
+
+

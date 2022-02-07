@@ -21,8 +21,17 @@ class ViewController extends AppController
     }
 
     public function dashboard()
+
     {
-        $this->render("dashboard");
+        session_start();
+
+        if (!isset($_SESSION['uid'])) {
+            http_response_code(401);
+            $this->login();
+        } else {
+            $this->render("dashboard");
+        }
+
     }
 
 }

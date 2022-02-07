@@ -17,6 +17,9 @@ Routing::get("dashboard", "ViewController");
 
 
 Routing::post("register", "RegisterController");
+Routing::post("login", "LoginController");
+Routing::post("logout", "LoginController");
+Routing::post("upload", "ItemController");
 
 
 Routing::run($action);

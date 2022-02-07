@@ -6,54 +6,40 @@ require_once 'src/repositories/UserRepository.php';
 
 class RegisterController
 {
+
     public function register()
     {
         $body = file_get_contents('php://input');
         $data = json_decode($body, true);
 
-        $name = $data["name"];
-        $surname = $data["surname"];
-        $login = $data['login'];
-        $email = $data["email"];
-        $password = $data["password"];
-        $confirmation = $data["confirmation"];
+        # Hash password.
+        $hash = password_hash($data['password'], PASSWORD_BCRYPT, array('cost' => 9));
+
+        $user = new User(
+            $data['name'],
+            $data['surname'],
+            $data['login'],
+            $data['email'],
+            $hash
+        );
 
         try {
-
-            $this->arePasswordEqual($password, $confirmation);
-
-            # Password hashing:
-            $hash = password_hash($_POST['password'], PASSWORD_BCRYPT, array('cost' => 9));
-
-            $user = new User(
-                $name,
-                $surname,
-                $login,
-                $email,
-                $hash
-            );
 
             $userRepository = new UserRepository();
             $userRepository->saveUser($user);
 
-            echo '';
-
         } catch (Exception $exception) {
+
+            /*
+             *  Catch exceptions from database including unique, and not null violation.
+             *
+             * */
+
+            http_response_code(400);
+            echo $exception->getMessage();
 
         }
 
     }
-
-
-    /**
-     * @throws Exception
-     */
-    private function arePasswordEqual($password, $password_confirmation)
-    {
-        if (!$password == $password_confirmation)
-            throw new Exception('Passwords do not match.');
-    }
-
-
 
 }

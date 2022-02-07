@@ -27,8 +27,6 @@ nav {
     display: flex;
     flex-direction: column;
     align-items: start;
-
-    box-shadow: 1px 1px 5px black;
 }
 
 
@@ -51,65 +49,71 @@ nav div {
     width: 100%;
 }
 
-.Option:hover {
-    border-left: 3px solid black;
-    cursor: pointer;
-}
-
-button:hover {
-    cursor: pointer;
-}
-
-i:hover {
-    cursor: pointer;
-}
-
-button {
-    background-color: transparent;
-    border: none;
-    outline: none;
-}
-
-.Option > * {
-    color: #8d8d8d;
-    font-weight: 500;
-
-    transition: 300ms;
-    transition-timing-function: ease-in;
-    transition-property: all;
-
-}
-
-.Option {
-    padding: 1.5rem 2rem;
-
-}
-
-.Option:hover > * {
-    color: black;
-}
-
 main {
-    height: 100%;
     width: 100%;
-    overflow: scroll;
+    height: 100%;
+}
+
+#root {
+    width: 100%;
+    height: max-content;
+
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/*!*********** Form: ************!*/
+
+/* Form: */
+form {
+    display: flex;
+    flex-direction: column;
+
+    margin: 1rem;
+    max-width: fit-content;
+}
+
+
+/* Photos: */
+
+.photos {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    margin: 1rem 0 3rem 0;
+}
+
+.photo {
+    position: relative;
+    width: 10rem;
+    height: 15rem;
+    cursor: pointer;
+    box-shadow: 1px 1px 6px rgba(45, 45, 45, 0.5);
+
 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
-    overflow-x: hidden;
+    border-radius: 0.5rem;
+    margin: 1rem 1rem;
 }
 
-#root {
-    width: 100%;
-    height: 100%;
-
+.photos .photo:first-child {
+    margin-left: 0;
 }
 
+.photos .photo:last-child {
+    margin-right: 0;
+}
 
-.Photo-Input {
+.photo-input {
     left: 0;
     top: 0;
 
@@ -121,28 +125,12 @@ main {
 
     cursor: pointer;
     z-index: 3;
+
+    border-radius: 1rem;
 }
 
-.Photo-Field {
-    position: relative;
-    width: 10rem;
-    height: 15rem;
-    cursor: pointer;
-    box-shadow: 1px 1px 5px black;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.Photo-Field i {
-    position: absolute;
-    z-index: 1;
-    color: #8f8f8f;
-}
-
-.Photo-Label {
+.photo-label {
     display: inline-block;
     cursor: pointer;
 
@@ -153,105 +141,21 @@ main {
     height: 100%;
 }
 
-.Add-Photo-Alternate {
+.photo i {
     position: absolute;
-    transform: scale(2);
-    color: #d2d2d2;
-    z-index: 0;
-
-    transition: 0.5s;
-    transition-timing-function: ease-in;
-    transition-property: all;
-
+    z-index: 1;
+    color: rgba(45, 45, 45, 0.2);
+    transform: scale(3);
 }
 
-.Photo-Field:hover .Add-Photo-Alternate {
-    color: black;
+.photo:hover i {
+    position: absolute;
+    z-index: 1;
+    color: #2d2d2d;
+    transform: scale(3);
 }
 
-.Photo-Inputs {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-/* Contains file input and label: */
-.Photo-Field {
-    min-width: 10rem;
-    min-height: 15rem;
-
-    overflow: hidden;
-
-    margin: 1rem 1rem 0 0;
-}
-
-.Photo-Field:last-child {
-    margin-right: 0;
-}
-
-/* Form: */
-form {
-    display: flex;
-    flex-direction: column;
-
-    margin: 1rem;
-    max-width: fit-content;
-}
-
-/* Map: */
-#map {
-    min-width: 15rem;
-    min-height: 15rem;
-    margin: 0 1rem;
-}
-
-/* Contains map, title input and textarea:  */
-.Form-Info-Panel {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: start;
-
-    margin: 1rem 0;
-}
-
-/* Contains title input and textarea: */
-.Form-Text-Inputs {
-    padding-right: 1rem;
-    width: 15rem;
-
-}
-
-.Title-Field {
-    width: 15rem;
-    background-color: pink;
-}
-
-.Title-Field input {
-    width: 100%;
-    padding: 0.4rem 1rem;
-    outline: none;
-    border: 1px solid black;
-}
-
-/* Text-area: */
-.Description {
-    resize: none;
-    width: 15rem;
-
-    padding: 0.4rem 1rem;
-    margin: 1rem 0;
-
-    outline: none;
-    border: 1px solid black;
-}
-
-form > div:last-child {
-    text-align: center;
-    padding: 0.4rem 1rem;
-}
-
-.Photo-Field img {
+.photo img {
     position: absolute;
     z-index: 0;
     left: 0;
@@ -262,17 +166,89 @@ form > div:last-child {
 }
 
 
-.Photo-Field:hover .img {
-    filter: brightness(0.2);
+/* The div where map, and inputs are. */
+form > div:nth-child(2) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
-.Photo-Field:hover .Trash {
-    transition: 0.5s;
-    transition-timing-function: ease-in-out;
-    transition-property: all;
+/* Both map and title with description will have 50% width space. */
+form > div:nth-child(2) > div {
+    width: 50%;
+    min-width: 15rem;
+    max-height: 15rem;
+}
+
+/* Div where title and description are.*/
+form > div:nth-child(2) > div:first-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    margin: 1rem 0 0 0;
+}
+
+/* Div which contains description textarea.*/
+form > div:nth-child(2) > div:first-child > div:last-child {
+    height: 100%;
+    margin: 1rem 0 0 0;
+}
+
+
+/* Div that contains title input and title label. */
+form > div:nth-child(2) > div:first-child > div {
+    width: 90%;
+}
+
+#title {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+#description {
+    resize: none;
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+
+    padding: 1rem 1rem;
+}
+
+
+/* Map: */
+#map {
+    margin: 1rem 0;
+    min-width: min-content;
+    max-width: 90%;
+    height: 15rem;
+}
+
+form input[type="submit"] {
+    padding: 0.6rem 6rem;
+    outline: none;
+    border: none;
+
+    font-weight: 500;
+
+    background-color: #2d2d2d;
     color: white;
+
+    box-shadow: 1px 1px 5px #2d2d2d;
+
+    cursor: pointer;
+    margin: 2rem 0;
 }
 
-.Photo-Field i {
-    transform: scale(4);
+form > input:last-child {
+    width: 50%;
+    margin: 3rem auto;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+input[type='submit']:hover {
+    background-color: #252525;
 }
