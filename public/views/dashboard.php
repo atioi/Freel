@@ -29,17 +29,11 @@
 
 <nav>
 
-    <div id="header">
-        <h1>
-            Freely
-        </h1>
+    <div class="avatar">
     </div>
 
-
-    <!-- Cart: -->
-    <div class="Option" id="dashboard">
-        <i class="material-icons">grid_view</i>
-        <button>DASHBOARD</button>
+    <div>
+        <p>Welcome back</p>
     </div>
 
 
@@ -60,6 +54,13 @@
         <i class="material-icons">settings</i>
         <button>SETTINGS</button>
     </div>
+
+    <!-- Logout: -->
+    <div class="Option" id="logout">
+        <i class="material-icons">logout</i>
+        <button>LOGOUT</button>
+    </div>
+
 
 </nav>
 

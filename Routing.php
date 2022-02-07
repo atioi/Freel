@@ -2,6 +2,8 @@
 
 require 'src/controllers/ViewController.php';
 require 'src/controllers/RegisterController.php';
+require 'src/controllers/ItemController.php';
+require 'src/controllers/LoginController.php';
 
 
 class Routing

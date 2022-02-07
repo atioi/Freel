@@ -26,17 +26,17 @@
     <section>
         <h2>LOGIN</h2>
 
-        <form action="/login" method="POST">
+        <form id="login-form" action="/login" method="POST">
             <div>
-                <label for="login"></label>
+                <label for="email"></label>
                 <i class="material-icons" id="letter">mail_outline</i>
-                <input id="email" name="email" placeholder="Email" type="email" required>
+                <input id="email" name="email" placeholder="Email" type="email">
             </div>
 
             <div>
                 <label for="password"></label>
                 <i class="material-icons" id="lock">lock</i>
-                <input id="password" name="password" placeholder="Password" type="password" required>
+                <input id="password" name="password" placeholder="Password" type="password">
                 <i class="material-icons invisible" id="eye">visibility_off</i>
             </div>
 
