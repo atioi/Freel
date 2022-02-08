@@ -26,7 +26,8 @@ class RegisterController
         try {
 
             $userRepository = new UserRepository();
-            $userRepository->saveUser($user);
+            $uid = $userRepository->saveUser($user);
+            $userRepository->saveAvatarColor($data['color'], $uid);
 
         } catch (Exception $exception) {
 

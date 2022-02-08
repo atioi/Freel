@@ -71,14 +71,20 @@ async function register(event) {
         if (!validate())
             throw new Error('Invalid data typed!');
 
+
+        const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+
         const user = {
             name: name.value,
             surname: surname.value,
+            color: randomColor,
             login: login.value,
             email: email.value,
             password: password.value,
             confirmation: confirmation.value
         };
+
+        console.log(user);
 
 
         const response = await fetch('/register', {

@@ -24,12 +24,12 @@ loginForm.onsubmit = async (event) => {
         password: formData.get('password')
     }
 
-    console.log(JSON.stringify(data));
     const response = await login(data);
 
-    if (response.status === 200)
-        window.location.replace('/dashboard');
 
+    if (response.status === 200) {
+        window.location.replace('/dashboard');
+    }
 
 }
 

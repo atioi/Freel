@@ -29,7 +29,7 @@ class ViewController extends AppController
             http_response_code(401);
             $this->login();
         } else {
-            $this->render("dashboard");
+            $this->render("dashboard", ["name" => $_SESSION['name'], "color" => $_SESSION['color']]);
         }
 
     }
