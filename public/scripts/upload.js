@@ -217,31 +217,54 @@ async function onUpload(event, map) {
 
     event.preventDefault();
 
-    // Coords should be setting:
-    const coords = map.position();
-    console.log(coords);
-
+    console.log('helloo')
 
     const formData = new FormData(event.target);
 
+    const data = {
+        title: formData.get('title'),
+        description: formData.get('description'),
+        coords: map.position(),
+        photos: [formData.get('photo-01'), formData.get('photo-02'), formData.get('photo-03'), formData.get('photo-04')]
+    };
 
-    const title = formData.get('title');
-    const photos = [formData.get('photo_01'), formData.get('photo_02'), formData.get('photo_03'), formData.get('photo_04')];
+
+    validate(data);
+    // const response = send();
 
 
-    formData.append('lng', coords.lng);
-    formData.append('lat', coords.lat);
+}
+
+function validate(data) {
+
+    const errors = [];
 
 
+    console.log(data.title);
+    data.photos.forEach(photo => console.log(photo));
+
+    if (data.title.trim() === '') {
+        errors.push('Title is required.')
+        document.getElementById('title').classList.add('required');
+    }
+
+    if (data.coords === null) {
+        errors.push('Coords are required.');
+        document.getElementById('map').classList.add('required');
+    }
+
+    if (data.photos.filter(photo => photo.size > 0).length === 0) {
+        errors.push('At least one photo is mandatory.')
+        document.getElementsByClassName('photo').item(0).classList.add('required');
+    }
+
+
+}
+
+
+async function send() {
     // const response = await fetch('/upload', {
     //     method: "POST",
     //     body: formData
     // });
-
 }
-
-function isEmpty(value) {
-    return value === null || value.trim().length === 0 || value === undefined;
-}
-
-

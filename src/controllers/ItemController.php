@@ -12,33 +12,41 @@ class ItemController
 
         session_start();
 
-        $title = $_POST['title'];
-        $description = $_POST['description'];
-        $coords = $_POST['coords'];
+        if (isset($_SESSION['uid'])) {
+
+            $title = $_POST['title'];
+            $description = $_POST['description'];
+            $coords = $_POST['coords'];
 
 
-        # Here is a directory for the items that user sent.
-        $dirname = 'public/uploads/items/' . uniqid() . '/';
-        mkdir($dirname);
+            # Here is a directory for the items that user sent.
+            $dirname = 'public/uploads/items/' . uniqid() . '/';
+            mkdir($dirname);
 
-        # Upload photos to that directory:
-        $photos = $this->uploadPhotos($dirname);
+            # Upload photos to that directory:
+            $photos = $this->uploadPhotos($dirname);
 
-        $item = new Item($title, $description, $coords, $photos);
+            $item = new Item($title, $description, $coords, $photos);
 
 
-        $userRepository = new UserRepository();
+            $userRepository = new UserRepository();
 
-        try {
-            $userRepository->saveItem($_SESSION['uid'], $item);
-        } catch (Exception $exception) {
-            http_response_code(404);
+            try {
+                $userRepository->saveItem($_SESSION['uid'], $item);
+            } catch (Exception $exception) {
+                http_response_code(404);
+            }
+
+        } else {
+
+            http_response_code(401);
+            die('Unauthorized');
+
         }
-
 
     }
 
-    function uploadPhotos($dirname)
+    private function uploadPhotos($dirname)
     {
         $photos = [];
 

@@ -15,7 +15,16 @@ class LoginController
             $data = $userRepository->fetchUser($body['email']);
 
             if (password_verify($body['password'], $data['password'])) {
+
+                $color = $userRepository->fetchAvatarColor($data['id']);
                 $this->set_session($data['id']);
+
+                setcookie('color', '#' . $color);
+                setcookie('name', $data['name']);
+                setcookie('surname', $data['surname']);
+
+
+                echo json_encode(['name' => $data['name'], 'surname' => $data['surname'], 'color' => $color]);
 
             } else
                 throw new Exception("Invalid data");

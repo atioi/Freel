@@ -16,7 +16,9 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
 
     <!-- Styles: -->
+    <link rel="stylesheet" type="text/css" href="/public/css/cockpit.css">
     <link rel="stylesheet" type="text/css" href="/public/css/dashboard.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/upload.css">
 
 </head>
 <body>
@@ -29,38 +31,32 @@
 
 <nav>
 
-    <div class="avatar">
-    </div>
+    <div id="avatar"></div>
+    <div id="greeting"></div>
 
-    <div>
-        <p>Welcome back</p>
+    <!-- Settings: -->
+    <div class="option" id="dashboard">
+        <i class="material-icons">dashboard</i>
+        <button>DASHBOARD</button>
     </div>
-
 
     <!-- Cart: -->
-    <div class="Option" id="cart">
+    <div class="option" id="cart">
         <i class="material-icons">shopping_bag</i>
         <button>CART</button>
     </div>
 
     <!-- Upload: -->
-    <div class="Option" id="upload">
+    <div class="option" id="upload">
         <i class="material-icons">sell</i>
         <button>UPLOAD</button>
     </div>
 
-    <!-- Settings: -->
-    <div class="Option" id="settings">
-        <i class="material-icons">settings</i>
-        <button>SETTINGS</button>
-    </div>
-
     <!-- Logout: -->
-    <div class="Option" id="logout">
+    <div class="option" id="logout">
         <i class="material-icons">logout</i>
         <button>LOGOUT</button>
     </div>
-
 
 </nav>
 
@@ -70,8 +66,7 @@
 
 <script src="/public/scripts/mapbox.js"></script>
 <script src="/public/scripts/upload.js"></script>
-<script src="/public/scripts/dashboard.js"></script>
-<script src="/public/scripts/uploadForm.js"></script>
+<script src="/public/scripts/cockpit.js"></script>
 
 </body>
 </html>

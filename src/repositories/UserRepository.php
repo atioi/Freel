@@ -21,7 +21,7 @@ class UserRepository extends Repository
 
         $this->database->connect();
         $stmt = $this->database->connect()->prepare(
-            'INSERT INTO users (name, surname, login, email, password) VALUES(?, ?, ?, ?, ?);'
+            'INSERT INTO users (name, surname, login, email, password) VALUES(?, ?, ?, ?, ?) RETURNING id;'
         );
 
         try {
@@ -33,6 +33,10 @@ class UserRepository extends Repository
                 $user->getEmail(),
                 $user->getPassword()
             ]);
+
+
+            $result = $stmt->fetch();
+            return $result['id'];
 
         } catch (Exception $exception) {
             throw new Exception(self::ERROR_CODES[$exception->getCode()]);
@@ -97,6 +101,55 @@ class UserRepository extends Repository
 
             throw new Exception("Database error");
         }
+
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function saveAvatarColor($color, $uid)
+    {
+        $stmt = $this->database->connect()->prepare('
+            INSERT INTO avatars (color, "user") VALUES(?, ?);
+        ');
+
+        try {
+            $stmt->execute([
+                $color,
+                $uid
+            ]);
+
+        } catch (PDOException $exception) {
+            echo $uid;
+            echo $color;
+            echo $exception;
+            throw new Exception('Avatar error.');
+        }
+
+
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    public function fetchAvatarColor($uid)
+    {
+        $stmt = $this->database->connect()->prepare('
+            SELECT * FROM avatars WHERE "user"=:id; 
+        ');
+
+        $stmt->bindParam(':id', $uid);
+        $stmt->execute();
+
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!isset($result['color']))
+            throw new Exception('Avatar error');
+
+        return $result['color'];
+
 
     }
 
