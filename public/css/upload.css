@@ -1,0 +1,198 @@
+
+/*!*********** Form: ************!*/
+
+/* Form: */
+form {
+    display: flex;
+    flex-direction: column;
+
+    margin: 1rem;
+    max-width: fit-content;
+}
+
+
+/* Photos: */
+
+.photos {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    margin: 1rem 0 3rem 0;
+}
+
+.photo {
+    position: relative;
+    width: 10rem;
+    height: 15rem;
+    cursor: pointer;
+    box-shadow: 1px 1px 6px rgba(45, 45, 45, 0.5);
+
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 0.5rem;
+    margin: 1rem 1rem 1rem 0;
+}
+
+.photos .photo:first-child {
+    margin-left: 0;
+}
+
+
+.photo-input {
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    opacity: 0;
+
+    cursor: pointer;
+    z-index: 3;
+
+    border-radius: 1rem;
+}
+
+
+.photo-label {
+    display: inline-block;
+    cursor: pointer;
+
+    position: absolute;
+    z-index: 0;
+
+    width: 100%;
+    height: 100%;
+}
+
+.photo i {
+    position: absolute;
+    z-index: 1;
+    color: rgba(45, 45, 45, 0.2);
+    transform: scale(3);
+}
+
+.photo:hover i {
+    position: absolute;
+    z-index: 1;
+    color: #2d2d2d;
+    transform: scale(3);
+}
+
+.photo img {
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+}
+
+
+/* The div where map, and inputs are. */
+form > div:nth-child(2) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+/* Both map and title with description will have 50% width space. */
+form > div:nth-child(2) > div {
+    width: 50%;
+    min-width: 15rem;
+    max-height: 15rem;
+}
+
+/* Div where title and description are.*/
+form > div:nth-child(2) > div:first-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    margin: 1rem 0 0 0;
+}
+
+/* Div which contains description textarea.*/
+form > div:nth-child(2) > div:first-child > div:last-child {
+    height: 100%;
+    margin: 1rem 0 0 0;
+}
+
+
+/* Div that contains title input and title label. */
+form > div:nth-child(2) > div:first-child > div {
+    width: 90%;
+}
+
+#title {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+#description {
+    resize: none;
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+
+    padding: 1rem 1rem;
+}
+
+
+/* Map: */
+#map {
+    margin: 1rem 0;
+    min-width: min-content;
+    max-width: 90%;
+    height: 15rem;
+    position: relative;
+}
+
+form input[type="submit"] {
+    padding: 0.6rem 6rem;
+    outline: none;
+    border: none;
+
+    font-weight: 500;
+
+    background-color: #2d2d2d;
+    color: white;
+
+    box-shadow: 1px 1px 5px #2d2d2d;
+
+    cursor: pointer;
+    margin: 2rem 0;
+}
+
+form > input:last-child {
+    width: 50%;
+    margin: 3rem auto;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+input[type='submit']:hover {
+    background-color: #252525;
+}
+
+
+.root-upload {
+
+    width: 100%;
+    height: max-content;
+
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}

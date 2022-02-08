@@ -20,7 +20,7 @@ class ViewController extends AppController
         $this->render("register");
     }
 
-    public function dashboard()
+    public function cockpit()
 
     {
         session_start();
@@ -29,7 +29,7 @@ class ViewController extends AppController
             http_response_code(401);
             $this->login();
         } else {
-            $this->render("dashboard", ["name" => $_SESSION['name'], "color" => $_SESSION['color']]);
+            $this->render("cockpit");
         }
 
     }

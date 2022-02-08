@@ -112,6 +112,7 @@ const upload_option = new Option(
         root.innerHTML = '';
         const form = Form();
         root.append(form);
+        root.className = 'root-upload';
         main.append(root);
         const map = new Mapbox();
         uploadItems(map);
@@ -138,7 +139,7 @@ const logout_option = new Option(
 
 /* Dashboard-option: */
 
-const dashboard = new Option(
+const dashboard_option = new Option(
     document.getElementById('dashboard'),
 
     () => {
@@ -153,6 +154,7 @@ const dashboard = new Option(
         const fullName = document.createElement('p');
         fullName.innerText = `${cookies.name} ${cookies.surname}`;
 
+        root.className = 'root-dashboard';
 
         root.append(portrait);
         root.append(fullName);
@@ -166,11 +168,11 @@ const dashboard = new Option(
 *
 * */
 
-const menu = new Menu(upload_option, logout_option, dashboard);
+const menu = new Menu(upload_option, logout_option, dashboard_option);
 
 /*
 *   The default dashboard option is switched on after the view had been loaded. In this case the default option is the dashboard option.
 *   To change default option run menu.switch(<option>).
 * */
-menu.switch(dashboard);
+menu.switch(dashboard_option);
 
