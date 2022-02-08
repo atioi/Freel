@@ -28,7 +28,7 @@ loginForm.onsubmit = async (event) => {
 
 
     if (response.status === 200) {
-        window.location.replace('/dashboard');
+        window.location.replace('/cockpit');
     }
 
 }

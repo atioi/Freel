@@ -19,7 +19,7 @@
 
 <nav>
     <a href="/"><h1>Freely</h1></a>
-    <a href="/dashboard"><i class="material-icons" id="user-avatar">account_circle</i></a>
+    <a href="/cockpit"><i class="material-icons" id="user-avatar">account_circle</i></a>
 </nav>
 <main>
 
