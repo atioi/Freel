@@ -27,7 +27,8 @@ class LoginController
                 echo json_encode(['name' => $data['name'], 'surname' => $data['surname'], 'color' => $color]);
 
             } else
-                throw new Exception("Invalid data");
+
+                 throw new Exception("Invalid data");
 
 
         } catch (Exception $exception) {
@@ -40,6 +41,9 @@ class LoginController
     public function logout()
     {
         session_start();
+        unset($_COOKIE['color']);
+        unset($_COOKIE['name']);
+        unset($_COOKIE['surname']);
         $_SESSION = array();
     }
 
