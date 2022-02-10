@@ -17,17 +17,22 @@
 </head>
 <body>
 
-<nav>
+<nav id="navigation">
     <a href="/"><h1>Freely</h1></a>
-    <a href="/cockpit"><i class="material-icons" id="user-avatar">account_circle</i></a>
+    <a href="/cockpit" id="user-cockpit"><i class="material-icons" id="user-avatar">account_circle</i></a>
 </nav>
 <main>
+
+    <div id="root">
+    </div>
 
 </main>
 <footer>
 
 </footer>
 
+<script src="/public/scripts/index.js"></script>
+<script src="/public/scripts/menu.js"></script>
 
 </body>
 </html>
