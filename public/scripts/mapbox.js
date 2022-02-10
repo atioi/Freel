@@ -11,18 +11,28 @@ class Mapbox {
 
     constructor() {
 
+        this.map_wrapper = document.createElement('div');
+        this.map_wrapper.id = 'map'
 
+        // This allow mapbox to find map_wrapper;
+        document.body.append(this.map_wrapper);
+
+        this.run();
+        return this.map_wrapper;
+    }
+
+    run() {
         /*
-        *   The Map object represents the map on your page.
-        *   It exposes methods and properties that enable you to programmatically change the map,
-        *   and fires events as users interact with it.
-        *
-        *   You create a Map by specifying a container and other options.
-        *   Then Mapbox GL JS initializes the map on the page and returns your Map object.
-        *
-        *   https://docs.mapbox.com/mapbox-gl-js/api/map/
-        *
-        * */
+     *   The Map object represents the map on your page.
+     *   It exposes methods and properties that enable you to programmatically change the map,
+     *   and fires events as users interact with it.
+     *
+     *   You create a Map by specifying a container and other options.
+     *   Then Mapbox GL JS initializes the map on the page and returns your Map object.
+     *
+     *   https://docs.mapbox.com/mapbox-gl-js/api/map/
+     *
+     * */
         this.#map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/mapbox/streets-v11',
@@ -71,7 +81,6 @@ class Mapbox {
         this.#geolocator.on('geolocate', (position) => this.geolocate(position));
         this.#marker.on('dragend', (position) => this.drag(position));
         this.#decoder.on('result', (result) => this.decode(result));
-
     }
 
     decode(result) {

@@ -1,131 +1,127 @@
-// The main element contains a root element. The root element is the element that
-// change dynamically its state after user clicks one of the menu option e.g user click upload_option
-// the root element will contain the form for uploading item to the database, etc.
+// // The main element contains a root element. The root element is the element that
+// // change dynamically its state after user clicks one of the menu option e.g user click upload_option
+// // the root element will contain the form for uploading item to the database, etc.
+//
+// //
+// // const root = document.getElementById('root');
+// //
+// //
+// // /* Cookies: After the cockpit.php view had been loaded cookies are fetched to set user avatar color and provide basic user information */
+// //
 
-
-const main = document.getElementById('main');
-const root = document.createElement('div');
-root.id = 'root';
-
-
-/* Cookies: After the dashboard.php view had been loaded cookies are fetched to set user avatar color and provide basic user information */
 
 const cookies = {};
 document.cookie.split(';').forEach(cookie => {
     cookies[cookie.trim().split('=')[0]] = decodeURIComponent(cookie.trim().split('=')[1]);
-})
-
-// User avatar
-const avatar = document.getElementById('avatar');
-avatar.style.backgroundColor = cookies.color;
-avatar.innerText = cookies.name.charAt(0);
-
-// Greeting
-const greeting = document.getElementById('greeting');
-greeting.innerText = `Welcome back, \n ${cookies.name}`;
+});
 
 
-/*
-*  Menu implementation:
-*
-*  The class Menu accept Option class instances, that points to the element that is part of menu and run the callback function.
-*  Both element and callback function have to be passed during Option element initialization.
-*
-*  e.g
-*
-*   const menu = Menu(<option_0>, <option_1>, .. <option_n>)
-*
-*   Where each of options is an instance of Option class:
-*
-*   const hello_option = new Option(<html.element>, callback);
-*
-*
-* */
+class Panel {
 
-class Option {
+    #panel;
 
-    #status = 'off';
-    #element;
-    #callback;
-
-    constructor(element, callback) {
-        this.#element = element;
-        this.#callback = callback;
+    constructor() {
+        this.#panel = document.createElement('div');
+        this.#panel.id = 'panel';
     }
 
-    onclick(menu) {
-        // When user click on option, option inform Menu to switch.
-        this.#element.onclick = (event) => {
-            menu.switch(this);
+    dashboard() {
+
+        this.#panel.innerHTML = null;
+        this.#panel.className = 'Dashboard';
+
+        const avatar = document.createElement('div');
+        avatar.id = 'avatar';
+        avatar.innerText = cookies.name.charAt(0);
+        avatar.style.backgroundColor = cookies.color;
+        this.#panel.append(avatar);
+
+
+        const div = document.createElement('div');
+        const p = document.createElement('p');
+        p.innerText = `${cookies.name} ${cookies.surname}`;
+        div.append(p);
+
+        this.#panel.append(div);
+
+
+    }
+
+    upload(event) {
+        this.#panel.innerHTML = null;
+        this.#panel.className = 'Upload';
+        const uploadForm = new UploadForm();
+        this.#panel.append(uploadForm);
+
+    }
+
+    get gui() {
+        return this.#panel;
+    }
+
+}
+
+
+class Avatar {
+    #avatar
+
+    constructor() {
+        this.#avatar = document.createElement('div');
+        this.set();
+    }
+
+    set() {
+        if (cookies.color !== undefined && cookies.name !== undefined) {
+            // Cookies are set.
+            this.#avatar.style.backgroundColor = cookies.color;
+            this.#avatar.innerText = cookies.name.charAt(0);
+            this.#avatar.className = 'User-Avatar';
+        } else {
+            // Cookies are not set. Set avatar to default.
+            this.#avatar.className = 'Default-Avatar'
+            const icon = document.createElement('i');
+            icon.className = 'material-icons';
+            icon.innerText = 'account_circle';
+            this.#avatar.append(icon);
         }
-
     }
 
-    switch(option) {
-        this.#status = option === this ? 'on' : 'off';
-        if (this.#status === 'off')
-            this.#element.classList.remove('Chosen');
-        if (this.#status === 'on')
-            this.#element.classList.add('Chosen');
-    }
-
-    run() {
-        if (this.#status === 'off')
-            this.#callback();
+    get gui() {
+        return this.#avatar;
     }
 }
 
-class Menu {
 
-    #options
+class CockpitMenu {
 
-    constructor(...options) {
-        this.#options = options;
-        this.#options.forEach(option => option.onclick(this))
+    #menu
+
+    constructor(panel) {
+        this.#menu = document.createElement('menu');
+        this.#menu.className = 'Menu';
+
+        // Menu's options:
+        const dashboard = this.option('DASHBOARD', 'dashboard');
+        dashboard.onclick = (event) => {
+            dashboard.style.color = "#2d2d2d2";
+            panel.dashboard()
+        };
+
+        const upload = this.option('UPLOAD', 'file_upload');
+        upload.onclick = (event) => panel.upload();
+
+        const logout = this.option('LOGOUT', 'logout');
+        logout.onclick = this.logout;
+
+
+        this.#menu.append(dashboard);
+        this.#menu.append(upload);
+        this.#menu.append(logout);
+
     }
 
-    switch(option) {
-        option.run();
-        this.#options.forEach(opt => opt.switch(option));
-    }
+    async logout() {
 
-}
-
-
-/*
-* Defined options:
-*
-*   dashboard
-*   cart_option
-*   upload_option
-*   logout_option
-*
-* */
-
-
-/*  Upload-option:  */
-
-const upload_option = new Option(
-    document.getElementById('upload'),
-
-    () => {
-        root.innerHTML = '';
-        const form = Form();
-        root.append(form);
-        root.className = 'root-upload';
-        main.append(root);
-        const map = new Mapbox();
-        uploadItems(map);
-    }
-);
-
-
-/* Logout-option: */
-
-const logout_option = new Option(
-    document.getElementById('logout'),
-
-    async () => {
         const response = await fetch('/logout', {
             method: 'POST'
         })
@@ -135,44 +131,112 @@ const logout_option = new Option(
         }
 
     }
-);
 
-/* Dashboard-option: */
+    option(name, icon) {
+        const option = document.createElement('div');
+        option.className = 'Menu-Option'
 
-const dashboard_option = new Option(
-    document.getElementById('dashboard'),
+        const i = document.createElement('i');
+        i.className = 'material-icons';
+        i.innerText = icon;
 
-    () => {
 
-        root.innerHTML = '';
+        const button = document.createElement('button');
+        button.innerText = name;
 
-        const portrait = document.createElement('div');
-        portrait.style.backgroundColor = cookies.color;
-        portrait.innerText = cookies.name.charAt(0);
-        portrait.id = 'portrait';
+        option.append(i);
+        option.append(button);
 
-        const fullName = document.createElement('p');
-        fullName.innerText = `${cookies.name} ${cookies.surname}`;
+        return option;
+    }
 
-        root.className = 'root-dashboard';
+    get gui() {
+        return this.#menu;
+    }
 
-        root.append(portrait);
-        root.append(fullName);
-        main.append(root);
+}
+
+
+class Navigation {
+
+    #navigation;
+
+    constructor(panel) {
+        this.#navigation = document.createElement('div');
+        this.#navigation.className = 'Navigation';
+
+
+        // FIXME:
+        const back = document.createElement('div');
+        back.className = 'Return';
+        const redirector = document.createElement('a');
+        redirector.href = '/';
+
+        const i = document.createElement('i');
+        i.className = 'material-icons';
+        i.innerText = 'arrow_back';
+
+        redirector.append(i);
+        back.append(redirector);
+        this.#navigation.append(back);
+
+
+        // Avatar:
+        const avatar = new Avatar();
+        this.#navigation.append(avatar.gui);
+
+        // Menu:
+        const menu = new CockpitMenu(panel);
+        this.#navigation.append(menu.gui);
 
     }
-)
 
-/*
-* The dashboard's view menu:
-*
-* */
+    async logout() {
 
-const menu = new Menu(upload_option, logout_option, dashboard_option);
+        const response = await fetch('/logout', {
+            method: 'POST'
+        })
 
-/*
-*   The default dashboard option is switched on after the view had been loaded. In this case the default option is the dashboard option.
-*   To change default option run menu.switch(<option>).
-* */
-menu.switch(dashboard_option);
+        if (response.ok) {
+            document.cookie = null;
+            window.location.replace('/');
+        }
 
+    }
+
+    get gui() {
+        return this.#navigation;
+    }
+
+}
+
+
+class Cockpit {
+
+    #cockpit
+
+    constructor() {
+        this.#cockpit = document.createElement('div');
+        this.#cockpit.id = 'cockpit';
+        this.#cockpit.className = 'Cockpit'
+
+
+        // Panel, which change its state
+        const panel = new Panel();
+        panel.dashboard();
+
+        // Navigation bar:
+        const navigation = new Navigation(panel);
+
+        this.#cockpit.append(navigation.gui);
+        this.#cockpit.append(panel.gui);
+    }
+
+    get gui() {
+        return this.#cockpit;
+    }
+
+}
+
+const cockpit = new Cockpit();
+document.body.append(cockpit.gui);

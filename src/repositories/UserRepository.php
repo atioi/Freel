@@ -153,4 +153,10 @@ class UserRepository extends Repository
 
     }
 
+
+    public function fetch_item()
+    {
+
+    }
+
 }

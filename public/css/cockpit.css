@@ -3,8 +3,6 @@
 
 * {
 
-    --almost-black: #2d2d2d;
-
     box-sizing: border-box;
     margin: 0;
 
@@ -12,112 +10,157 @@
     font-weight: 300;
     font-size: 20px;
 
-
 }
-
-@media only screen and (min-width: 601px) {
 
 body {
+    width: 100%;
     height: 100vh;
+
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+
+}
+
+#cockpit {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: #efefef;
+
+}
+
+/* | Cockpit navigation:   */
+
+.Navigation {
+    width: max-content;
+    height: 100%;
+    background-color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    box-shadow: 1px 1px 5px #2d2d2d;
+
+    margin-right: 1rem;
+
+}
+
+/* rETURN KEEPS arrow that allows user to back to shop.*/
+.Return {
+    padding: 1rem;
+    width: 100%;
 }
 
 
-h1 {
-    font-size: 2.5rem;
+/* Navigation user avatar */
+
+.Navigation .User-Avatar {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 500;
+
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+    margin: 1rem auto 3rem auto;
+
+}
+
+/* Navigation menu: */
+
+.Menu {
+    display: flex;
+    flex-direction: column;
+
+    width: max-content;
+    padding: 3rem 0;
+}
+
+.Menu-Option {
+    width: 100%;
+    padding: 1rem 2rem;
+    border-left: 5px solid white;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.Menu-Option:hover {
+    border-left: 5px solid black;
     cursor: pointer;
-    margin: 1rem 0 2rem 0;
 }
 
-/*!*********** Main: ************!*/
+.Menu-Option:hover > * {
+    cursor: pointer;
+}
+
+.Menu-Option button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
 
 
+/* | Cockpit panel: */
 
-    nav {
-        height: 100%;
-        width: max-content;
-
-        display: flex;
-        flex-direction: column;
-        align-items: start;
-        justify-items: center;
-
-        box-shadow: 1px 1px 5px #2d2d2d;
-    }
-
-    #avatar {
-        width: 6rem;
-        height: 6rem;
-
-        display: flex;
-        align-self: center;
-        justify-content: center;
-
-        border-radius: 50%;
-
-        margin: 1rem;
-
-        font-size: 3rem;
-        font-weight: 500;
-
-        cursor: default;
-    }
-
-    #greeting {
-        text-align: center;
-        margin: 1rem 0 2rem 0;
-        cursor: default;
-    }
-
-    nav div {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-left: 4px solid white;
-
-        transition: 200ms;
-        transition-timing-function: ease-in;
-        transition-property: all;
-
-        width: 100%;
-    }
+#panel {
+    width: 100%;
+    height: 100%;
+}
 
 
-    .option {
-        display: flex;
+@media only screen and (max-width: 400px) {
+
+    .Menu {
         flex-direction: row;
-        align-items: center;
-        cursor: pointer;
-
-        padding: 1rem 4rem;
-
+        padding: 0;
     }
 
-    .option button {
-        background-color: transparent;
+    .Menu button {
+        display: none;
+    }
+
+    .Menu-Option {
         border: none;
-        outline: none;
-
-        font-weight: 500;
-        font-size: 0.7rem;
-        cursor: pointer;
     }
 
-
-    .option:hover {
-        border-left: 4px solid black;
+    .Menu-Option:hover{
+        border: none;
     }
 
+    .Menu i {
+        color: grey;
+    }
 
-    /*!*********** Main: ************!*/
-    main {
+    #cockpit {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .Navigation {
+        flex-direction: row;
+        height: min-content;
         width: 100%;
-        height: 100%;
-        overflow-y: auto;
-
-        background-color: rgba(222, 222, 222, 0.24);
-
+        align-items: center;
     }
+
+    .Navigation .User-Avatar {
+        margin: 0;
+        transform: scale(0.5);
+        display: none;
+    }
+
+
 }
+
 
 
