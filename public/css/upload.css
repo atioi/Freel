@@ -1,131 +1,224 @@
+/* Every style must be preceded by .Dashboard class */
 
-* {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    font-size: 20px;
 
-    color: var(--almost-black);
+.Dashboard {
 
 }
 
-/* Phones: */
 @media only screen and (max-width: 400px) {
 
-    body {
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: start;
+    .Upload form h1 {
+
+        margin: 3rem 0;
+        font-size: 2rem;
+        font-weight: 500;
+
     }
 
-    main {
+    .Upload {
+
+        padding: 0.5rem 0;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        overflow-y: scroll;
+        overflow-x: hidden;
+
+        width: 100vw;
+
+        background-color: transparent;
+        margin: 0.1rem 0;
+    }
+
+    .Upload form {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+
+        max-width: 100%;
+        width: max-content;
+        padding: 2rem 1rem;
+    }
+
+    .Upload form .Title-Wrapper {
+        margin: 1rem;
+
+        position: relative;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        width: 100%;
+    }
+
+    .Title-Wrapper #error_outline {
+        position: absolute;
+        right: .5rem;
+        color: red;
+        visibility: hidden;
+    }
+
+    .Title-Wrapper .Error {
+        border: 1px solid red;
+    }
+
+    .Title-Wrapper .Error::placeholder {
+        color: red;
+    }
+
+    .Title-Wrapper input {
+        outline: none;
+        width: 100%;
+        padding: 0.4rem 2rem 0.4rem 1rem;
+    }
+
+    .Description-Wrapper {
+
+        width: 100%;
+        height: 10rem;
+    }
+
+    .Description-Wrapper textarea {
+        resize: none;
+        width: 100%;
+        height: 100%;
+        outline: none;
+        padding: 0.4rem 1rem;
+    }
+
+
+    .Photos {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+
+        width: 100%;
+
+        margin: 1rem 0;
+    }
+
+    .Photo {
+        width: 48%;
+        min-width: 7rem;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+
+        border-radius: .5rem;
+
+        height: 10rem;
+        position: relative;
+        z-index: 0;
+
+        overflow: hidden;
+
+        background-color: white;
+        box-shadow: 1px 1px 5px #2d2d2d;
+
+        margin: 0.5rem 0;
+
+    }
+
+    .Photo i {
+        transform: scale(2);
+    }
+
+
+    .Photo img {
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        filter: brightness(0.5);
+    }
+
+    .Photo label {
+        display: none;
+    }
+
+    .Photo input {
+        display: none;
+    }
+
+    .Upload input[type='submit'] {
+
+        margin: 2rem 0;
+
+        width: 100%;
+        padding: 0.4rem;
+        background-color: #2d2d2d;
+        color: white;
+        outline: none;
+        border: none;
+
+        box-shadow: 1px 1px 5px #2d2d2d;
+    }
+
+
+}
+
+@media only screen and (min-width: 1024px) {
+
+    .Photos {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    /* Photo: */
+    .Photo {
+        width: 10rem;
+        height: 15rem;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        background-color: white;
+        box-shadow: 2px 2px 5px #2d2d2d;
+        border-radius: .5rem;
+
+        position: relative;
+        z-index: 0;
+
+        margin: 1rem;
+
+        cursor: pointer;
+    }
+
+    .Photo img {
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
     }
 
-    #upload-form-header {
-        font-size: 2rem;
-        font-weight: 500;
-
-        margin: 3rem 0 4rem 0;
-    }
-
-    form {
-        text-align: center;
-        padding: 0 1rem;
-        width: 100%;
-        margin: 1rem auto 0 auto;
-    }
-
-    form input[type='submit'] {
-        display: none;
-    }
-
-    #map {
-        height: 15rem;
-        width: 90%;
-
-        display: none;
-    }
-
-    .Title-Wrapper {
-        width: 100%;
-        margin: 1rem 0;
-    }
-
-    .Title-Wrapper input {
-        width: 100%;
-        padding: 0.4rem 1rem;
-        outline: none;
-
-    }
-
-    .Description-Wrapper {
-        width: 100%;
-        margin: 1rem 0;
-    }
-
-    .Description-Wrapper textarea {
-        width: 100%;
-        height: 10rem;
-        padding: 0.7rem 1rem;
-        outline: none;
+    .Photo:hover {
+        box-shadow: 5px 5px 8px #2d2d2d;
     }
 
 
-    .error_outline {
-        color: red;
+    .Photo label {
         visibility: hidden;
-        position: absolute;
-        right: 1rem;
-        display: inline-block;
     }
 
-    #top-menu {
-        width: 100%;
-        padding: 1rem 1rem;
-        display: flex;
-        flex-direction: row;
-        align-items: end;
-        justify-content: end;
+    .Photo input {
+        visibility: hidden;
     }
 
-    #next {
-        background-color: #2d2d2d;
-        padding: 0.4rem 2rem;
-        color: white;
-        outline: none;
-        border: none;
-        box-shadow: 1px 1px 5px #2d2d2d;
-    }
-
-    #next-wrapper {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: end;
-        padding: 0 2rem;
-    }
-}
-
-/* Tablets: */
-@media only screen and (min-width: 600px) {
 
 }
-
-/* Desktop: */
-@media only screen and (min-width: 1280px) {
-
-    .upload #next {
-        display: none;
-    }
-
-    .upload #close {
-        display: none;
-    }
-
-    nav{
-        display: inline-block;
-    }
-
-}
-

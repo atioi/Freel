@@ -1,9 +1,6 @@
 /* Every style must be preceded by .Dashboard class */
 
 
-.Dashboard {
-
-}
 
 @media only screen and (max-width: 400px) {
 
@@ -12,7 +9,7 @@
         padding: 2rem;
 
         width: 100%;
-        height: 100%;
+        height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -20,8 +17,10 @@
     }
 
     .Dashboard #avatar {
-        width: 4rem;
-        height: 4rem;
+        margin: 1rem 0 ;
+
+        width: 6rem;
+        height: 6rem;
 
         border-radius: 50%;
         display: flex;
@@ -29,10 +28,16 @@
         align-items: center;
         justify-content: center;
 
-        font-size: 2rem;
+        font-size: 3rem;
         font-weight: 500;
     }
 
+    .Dashboard .Greeting {
+    }
+
+    .Dashboard .Greeting p {
+        font-size: 1.5rem;
+    }
 
 
 }
