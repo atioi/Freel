@@ -205,11 +205,11 @@ class Upload {
         submit.value = 'UPLOAD'
 
         this.#upload.append(submit);
-        this.#upload.append(photos);
 
         const map = new Mapbox();
+        this.#upload.append(map);
 
-
+        this.#upload.append(photos);
         this.#upload.append(this.#description.gui);
         this.#upload.append(this.#title.gui);
         this.#upload.append(h1);
