@@ -1,19 +1,31 @@
-// // The main element contains a root element. The root element is the element that
-// // change dynamically its state after user clicks one of the menu option e.g user click upload_option
-// // the root element will contain the form for uploading item to the database, etc.
+// The main element contains a root element. The root element is the element that
+// change dynamically its state after user clicks one of the menu option e.g user click upload_option
+// the root element will contain the form for uploading item to the database, etc.
+
 //
-// //
-// // const root = document.getElementById('root');
-// //
-// //
-// // /* Cookies: After the cockpit.php view had been loaded cookies are fetched to set user avatar color and provide basic user information */
-// //
+// const root = document.getElementById('root');
+//
+//
+
+/* Cookies: After the cockpit.php view had been loaded cookies are fetched to set user avatar color and provide basic user information */
 
 
-const cookies = {};
-document.cookie.split(';').forEach(cookie => {
-    cookies[cookie.trim().split('=')[0]] = decodeURIComponent(cookie.trim().split('=')[1]);
-});
+class CookiesParser {
+    parse() {
+        const cookies = {};
+
+        document.cookie
+            .split(';')
+            .map(cookie => cookie.trim())
+            .map(cookie => [cookie.split('=')[0], decodeURIComponent(cookie.split('=')[1])])
+            .forEach(cookie => cookies[cookie[0]] = cookie[1]);
+
+        return cookies;
+    }
+}
+
+const cookieParser = new CookiesParser();
+const cookies = cookieParser.parse();
 
 
 class Panel {
@@ -38,9 +50,11 @@ class Panel {
 
 
         const div = document.createElement('div');
+        div.className = 'Greeting';
         const p = document.createElement('p');
         p.innerText = `${cookies.name} ${cookies.surname}`;
         div.append(p);
+
 
         this.#panel.append(div);
 
@@ -50,9 +64,14 @@ class Panel {
     upload(event) {
         this.#panel.innerHTML = null;
         this.#panel.className = 'Upload';
-        const uploadForm = new UploadForm();
-        this.#panel.append(uploadForm);
+        this.#panel.ontouchmove = this.touch_left;
+        const upload = new Upload();
+        this.#panel.append(upload.gui);
+    }
 
+
+    touch_left() {
+        console.log('heheh');
     }
 
     get gui() {
@@ -61,8 +80,8 @@ class Panel {
 
 }
 
-
 class Avatar {
+
     #avatar
 
     constructor() {
@@ -73,6 +92,7 @@ class Avatar {
     set() {
         if (cookies.color !== undefined && cookies.name !== undefined) {
             // Cookies are set.
+
             this.#avatar.style.backgroundColor = cookies.color;
             this.#avatar.innerText = cookies.name.charAt(0);
             this.#avatar.className = 'User-Avatar';
@@ -89,6 +109,7 @@ class Avatar {
     get gui() {
         return this.#avatar;
     }
+
 }
 
 
@@ -103,7 +124,7 @@ class CockpitMenu {
         // Menu's options:
         const dashboard = this.option('DASHBOARD', 'dashboard');
         dashboard.onclick = (event) => {
-            dashboard.style.color = "#2d2d2d2";
+            dashboard.getElementsByTagName('i').item(0).style.color = '#2d2d2d';
             panel.dashboard()
         };
 
@@ -139,7 +160,7 @@ class CockpitMenu {
         const i = document.createElement('i');
         i.className = 'material-icons';
         i.innerText = icon;
-
+        i.id = icon;
 
         const button = document.createElement('button');
         button.innerText = name;
@@ -198,7 +219,6 @@ class Navigation {
         })
 
         if (response.ok) {
-            document.cookie = null;
             window.location.replace('/');
         }
 

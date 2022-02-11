@@ -18,7 +18,7 @@
     <!-- Styles: -->
     <link rel="stylesheet" type="text/css" href="/public/css/cockpit.css">
     <link rel="stylesheet" type="text/css" href="/public/css/dashboard.css">
-
+    <link rel="stylesheet" type="text/css" href="/public/css/upload.css">
 
 </head>
 <body>
