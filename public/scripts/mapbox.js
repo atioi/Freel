@@ -18,6 +18,9 @@ class Mapbox {
         document.body.append(this.map_wrapper);
 
         this.run();
+    }
+
+    render() {
         return this.map_wrapper;
     }
 
@@ -83,6 +86,20 @@ class Mapbox {
         this.#decoder.on('result', (result) => this.decode(result));
     }
 
+    renderErrorMessage() {
+        const p = document.createElement('p');
+        p.className = 'Error-Message';
+        p.innerText = '*Set item localization.';
+        return p;
+    }
+
+    validate() {
+        if (this.coords === null) {
+            alert('coors cannot be null');
+            throw  new Error('Coords are not set');
+        }
+    }
+
     decode(result) {
         this.coords = result.result.geometry.coordinates;
         this.#marker.setLngLat(this.coords).addTo(this.#map);
@@ -97,9 +114,5 @@ class Mapbox {
         this.#marker.setLngLat(this.coords).addTo(this.#map);
     }
 
-    position() {
-        return this.coords === null ? null : {lng: this.coords[0], lat: this.coords[1]}
-    }
 
 }
-

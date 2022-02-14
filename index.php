@@ -14,12 +14,14 @@ Routing::get("index", "ViewController");
 Routing::get("login", "ViewController");
 Routing::get("register", "ViewController");
 Routing::get("cockpit", "ViewController");
+Routing::get("items", "ItemController");
 
 
 Routing::post("register", "RegisterController");
 Routing::post("login", "LoginController");
 Routing::post("logout", "LoginController");
 Routing::post("upload", "ItemController");
+Routing::post("buy", "ItemController");
 
 
 Routing::run($action);

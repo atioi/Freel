@@ -66,7 +66,7 @@ class Panel {
         this.#panel.className = 'Upload';
         this.#panel.ontouchmove = this.touch_left;
         const upload = new Upload();
-        this.#panel.append(upload.gui);
+        this.#panel.append(upload.render());
     }
 
 

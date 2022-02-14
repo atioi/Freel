@@ -1,29 +1,12 @@
 const root = document.getElementById('root');
-const navigation = document.getElementById('navigation');
-
-
-function load_animation() {
-
-    const div = document.createElement('div');
-    div.append(document.createElement('div'));
-    div.id = 'load-animation';
-
-    return div;
-
-}
-
-const animation = load_animation();
-
-root.append(animation);
 
 const cookies = {};
 document.cookie.split(';').forEach(cookie => {
     cookies[cookie.trim().split('=')[0]] = decodeURIComponent(cookie.trim().split('=')[1]);
 });
 
-console.log(cookies);
 
-const avatar = document.getElementById('user-cockpit');
+const avatar = document.getElementById('cockpit-anchor');
 
 function setAvatar() {
     if (cookies.color !== undefined) {
@@ -32,9 +15,41 @@ function setAvatar() {
         avatar.innerText = cookies.name.charAt(0);
 
     } else {
-        avatar.id = null;
+
     }
 }
 
-
 setAvatar();
+
+
+/* Animation: */
+const animation = document.createElement('div');
+animation.append(document.createElement('div'));
+animation.id = 'load-animation';
+root.append(animation);
+
+
+/* Fetches items from database: */
+async function fetchItems() {
+
+    const response = await fetch('/items', {
+        method: 'GET'
+    });
+
+    const data = await response.json()
+
+    return data
+        .map(item => new Item(item['id'], item['title'], item['coords'], item['description']));
+
+}
+
+
+fetchItems()
+    .then(items => {
+        animation.remove();
+        items.forEach(item => root.append(item.render()));
+    })
+    .catch(error => {
+    });
+
+
