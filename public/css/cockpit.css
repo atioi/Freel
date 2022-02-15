@@ -2,169 +2,126 @@
 
 
 * {
-
     box-sizing: border-box;
     margin: 0;
-
     font-family: 'Roboto', sans-serif;
-    font-weight: 300;
     font-size: 20px;
+}
 
+html {
+    width: 100%;
+    height: 100%;
 }
 
 body {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-
-}
-
-#cockpit {
     width: 100%;
-    min-height: 100%;
-
-    display: flex;
-    flex-direction: row;
-    background-color: white;
-
-}
-
-/* | Cockpit navigation:   */
-
-.Navigation {
-    width: max-content;
     height: 100%;
+    background-color: #f8f8f8;
+
+
+    display: grid;
+    grid-template-rows: 100vh;
+    grid-template-columns: max-content auto;
+    grid-template-areas: "navigation main";
+}
+
+nav {
+    grid-area: navigation;
     background-color: white;
-
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-
-    box-shadow: 1px 1px 5px #2d2d2d;
-
-    margin-right: 1rem;
-
+    box-shadow: 1px 1px 8px #2d2d2d;
 }
 
-/* rETURN KEEPS arrow that allows user to back to shop.*/
-.Return {
-    padding: 1rem;
+main {
+    grid-area: main;
     width: 100%;
+    height: 100%;
+    overflow: auto;
 }
 
-
-/* Navigation user avatar */
-
-.Navigation .User-Avatar {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    font-weight: 500;
-
-    height: 5rem;
-    width: 5rem;
-    border-radius: 50%;
-    margin: 1rem auto 3rem auto;
-
-}
-
-/* Navigation menu: */
-
-.Menu {
-    display: flex;
-    flex-direction: column;
-
-    width: max-content;
-    padding: 3rem 0;
-}
-
-.Menu-Option {
-    width: 100%;
-    padding: 1rem 2rem;
-    border-left: 5px solid white;
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.Menu-Option:hover {
-    border-left: 5px solid black;
+.Cockpit-Menu-Option {
     cursor: pointer;
 }
 
-.Menu-Option:hover > * {
-    cursor: pointer;
-}
+@media only screen and (max-width: 700px) {
 
-.Menu-Option button {
-    background-color: transparent;
-    border: none;
-    outline: none;
-}
-
-
-/* | Cockpit panel: */
-
-#panel {
-    width: 100%;
-    height: 100%;
-}
-
-
-@media only screen and (max-width: 400px) {
-
-    .Menu {
-        flex-direction: row;
-        padding: 0;
-        position: relative;
-        z-index: 2;
+    body {
+        grid-template-columns: 100%;
+        grid-template-rows:auto min-content;
+        grid-template-areas: "main" " navigation";
     }
 
-    .Menu button {
-        display: none;
+    main * {
+        max-width: 100%;
+        overflow-x: hidden;
     }
 
-    .Menu-Option {
-        border: none;
-    }
 
-    .Menu-Option:hover{
-        border: none;
-    }
-
-    .Menu i {
-        color: grey;
-    }
-
-    #cockpit {
+    nav {
+        max-width: 100%;
         display: flex;
-        flex-direction: column-reverse;
-    }
-
-    .Navigation {
-        flex-direction: row;
-        height: min-content;
-        width: 100%;
         align-items: center;
+        justify-content: space-evenly;
+
+        padding: 0.5rem 0;
     }
 
-    .Navigation .User-Avatar {
-        margin: 0;
-        transform: scale(0.5);
+    .Avatar {
         display: none;
     }
 
+    nav .Option {
+        display: none;
+    }
+
+    nav div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 
 }
 
+@media only screen and (min-width: 701px) {
 
 
+    nav .Cockpit-Menu-Option:first-child:hover {
+        border: white;
+    }
+
+    nav .Cockpit-Menu-Option:first-child {
+        border: white;
+    }
+
+
+    .Cockpit-Menu-Option {
+        padding: 1rem 2rem;
+        border-left: 5px solid white;
+
+        width: max-content;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        position: relative;
+    }
+
+    .Cockpit-Menu-Option p {
+        padding: 0 1rem;
+    }
+
+    .Cockpit-Menu-Option:hover {
+        cursor: pointer;
+        border-left: 5px solid #2d2d2d;
+    }
+
+    .Avatar {
+        width: 5rem;
+        height: 5rem;
+
+        background-color: red;
+        margin: 2rem auto 4rem auto;
+    }
+
+}

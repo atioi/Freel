@@ -153,7 +153,7 @@ class ItemController
     {
         $userRepository = new UserRepository();
         $item_id = $userRepository->saveItem($_SESSION['uid'], $item);
-//        $this->upload_item_photos($item_id, $item->getPhotos());
+        $this->upload_item_photos($item_id, $item->getPhotos());
     }
 
     /**
@@ -165,7 +165,7 @@ class ItemController
             # Standardize:
             $dirname = './public/uploads/items/' . uniqid();
 
-            if (!is_dir($dirname))
+            if (is_dir($dirname))
                 throw new Exception('Dir already exists!');
 
             mkdir($dirname);
@@ -192,11 +192,35 @@ class ItemController
         # Parsing:
         $items = $this->parseFetched($items_data);
 
+        # Fetching photos:
+        $this->fetchPhotos($items);
+
+
         # Converting (Standardization):
         $json = $this->toJSON($items);
 
         # Sending:
         echo $json;
+    }
+
+    function fetchPhotos($items)
+    {
+        foreach ($items as $item) {
+            $id = $item['id'];
+
+            $userRepository = new UserRepository();
+            $raw_photos = $userRepository->fetchPhotos($id);
+            $photos = [];
+
+
+            foreach ($raw_photos as $raw_photo) {
+                foreach ($raw_photo as $url)
+                    array_push($photos, $url);
+            }
+
+            $itemObject = $item['item'];
+            $itemObject->setPhotos($photos);
+        }
     }
 
     function toJSON($items)
@@ -211,13 +235,16 @@ class ItemController
             $title = $Item->getTitle();
             $description = $Item->getDescription();
             $localization = $Item->getLocalization();
+            $photos = $Item->getPhotos();
+
 
             array_push($JSON, [
                 'id' => $id,
                 'creation_date' => $creation_date,
                 'title' => $title,
                 'description' => $description,
-                'coords' => $localization
+                'coords' => $localization,
+                'photos' => $photos
             ]);
 
         }

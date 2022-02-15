@@ -1,300 +1,364 @@
-"use strict";
-
-
-class Title {
-
-    state = {
-        value: ''
-    }
-
-    renderErrorIcon() {
-        const error_outline = document.createElement('i');
-        error_outline.innerText = 'error_outline';
-        error_outline.className = 'material-icons title-error-outline';
-        return error_outline;
-    }
-
-    renderErrorMessage() {
-        const p = document.createElement('p');
-        p.className = 'Error-Message';
-        p.innerText = '*Title is required.';
-        return p;
-    }
-
-
-    renderInput(id, name, placeholder) {
-        const input = document.createElement('input');
-        input.id = id;
-        input.name = name;
-        input.placeholder = placeholder;
-        return input;
-    }
-
-    renderLabel(forID) {
-        const label = document.createElement('label');
-        label.for = forID;
-        return label;
-    }
-
-    render() {
-        this.self = document.createElement('div');
-        this.self.className = 'Title-Wrapper';
-
-        const input = this.renderInput('title', 'title', 'Title');
-        this.state.input = input;
-        input.onchange = this.onchange.bind(this);
-
-        const label = this.renderLabel('title');
-
-        const error_outline = this.renderErrorIcon();
-        this.state.error_outline = error_outline;
-
-        this.self.append(input);
-        this.self.append(label);
-        this.self.append(error_outline);
-
-        return this.self;
-    }
-
-    onchange(event) {
-        this.state.value = event.target.value;
-    }
-
-
-    validate() {
-        if (this.state.value === '') {
-            alert('Title is required');
-            throw new Error('Title is required!');
-        }
-    }
-
-}
-
-
-class Description {
-
-    render() {
-        this.self = document.createElement('div');
-        this.self.className = 'Description-Wrapper';
-
-        const textarea = document.createElement('textarea');
-        textarea.placeholder = 'Description';
-        textarea.id = 'description';
-        textarea.name = 'description';
-
-        const label = document.createElement('label');
-        label.for = 'description';
-
-        this.self.append(textarea);
-        this.self.append(label);
-
-        return this.self;
-    }
-
-}
-
 class Photo {
 
-    state = {
-        filled: false
-    }
-
-    renderLabel(nr) {
-        const label = document.createElement('label');
-        label.setAttribute('for', `photo_${nr}`);
-        return label;
-    }
-
-    renderInput(nr) {
-        const input = document.createElement('input');
+    renderFileInput(input_id) {
+        const input = document.createElement('input')
+        input.className = 'Photo-Input';
+        input.id = input_id;
+        input.name = input_id;
         input.type = 'file';
-        input.id = `photo_${nr}`;
-        input.name = `photo_${nr}`;
-        input.onchange = (event) => this.onchange(event)
+        input.onchange = (event) => this.onchange(event);
         return input;
+    }
+
+    suppressError() {
+        const error = document.getElementById('photos-fields-errors')
+        error.style.visibility = 'hidden';
+    }
+
+    renderFileLabel(input_id) {
+        const label = document.createElement('label');
+        label.className = 'Photo-Label';
+        label.for = input_id;
+        return label;
     }
 
     renderIcon() {
         const icon = document.createElement('i');
-        icon.className = 'material-icons';
         icon.innerText = 'add_photo_alternate';
+        icon.className = 'material-icons photo_state_icon add_photo_alternate';
         return icon;
     }
 
-    render(nr) {
+    render(input_id) {
+        this.div = document.createElement('div');
+        this.div.className = 'Photo-Field';
 
-        this.self = document.createElement('div');
-        this.self.className = 'Photo';
+        this.input = this.renderFileInput(input_id);
+        this.icon = this.renderIcon();
+        this.label = this.renderFileLabel(input_id);
 
-        const label = this.renderLabel(nr);
-        const input = this.renderInput(nr);
-        const icon = this.renderIcon();
+        this.div.append(this.input)
+        this.div.append(this.label)
+        this.div.append(this.icon);
 
-        this.self.append(label);
-        this.self.append(input);
-        this.self.append(icon);
+        this.div.onclick = this.add.bind(this);
 
-        this.self.onclick = (event) => this.upload(input);
-
-        return this.self;
+        return this.div;
     }
 
-    upload(input) {
-        input.click();
+    add() {
+        this.input.click();
     }
+
+    remove() {
+        this.input.value = null;
+        this.img.remove();
+        this.icon.innerText = 'add_photo_alternate';
+        this.icon.classList.remove('delete_outline')
+        this.icon.classList.add('add_photo_alternate');
+        this.div.onclick = this.add.bind(this);
+    }
+
 
     onchange(event) {
-        this.preview(event.target);
-        this.state.filled = true;
-    }
-
-    preview(input) {
+        const input = event.target;
         const reader = new FileReader();
         reader.onloadend = () => {
-            const img = document.createElement('img');
-            img.src = `${reader.result}`;
-            input.parentElement.append(img);
+            this.img = document.createElement('img');
+            this.img.src = `${reader.result}`;
+            this.input.parentElement.append(this.img);
+
+            this.icon.innerText = 'delete_outline';
+            this.icon.classList.remove('add_photo_alternate')
+            this.icon.classList.add('delete_outline');
+            this.suppressError();
+            this.div.onclick = this.remove.bind(this);
+
         }
         reader.readAsDataURL(input.files[0]);
     }
-
-    isFilled() {
-        return this.state.filled;
-    }
-
-
 }
 
 
-class Photos {
+class PhotosInputs {
+    showError(message) {
+        const error = document.getElementById('photos-fields-errors')
+        error.innerText = message;
+        error.style.visibility = 'visible';
+    }
 
-    state = {
-        photos: {}
-    };
 
     render() {
+        this.photos = []
 
-        this.self = document.createElement('div');
-        this.self.className = 'Photos';
+        const conatiner = document.createElement('div');
 
-        const photo_0 = new Photo();
-        const photo_1 = new Photo();
-        const photo_2 = new Photo();
-        const photo_3 = new Photo();
-
-        this.state.photos.photo_0 = photo_0;
-        this.state.photos.photo_1 = photo_1;
-        this.state.photos.photo_2 = photo_2;
-        this.state.photos.photo_3 = photo_3;
+        const div = document.createElement('div');
+        div.className = 'Photos-Fields';
 
 
-        this.self.append(photo_0.render(0));
-        this.self.append(photo_1.render(1));
-        this.self.append(photo_2.render(2));
-        this.self.append(photo_3.render(3));
+        this.photo_0 = new Photo();
+        this.photo_1 = new Photo();
+        this.photo_2 = new Photo();
+        this.photo_3 = new Photo();
 
-        return this.self;
+        this.photos.push(this.photo_0);
+        this.photos.push(this.photo_1);
+        this.photos.push(this.photo_2);
+        this.photos.push(this.photo_3);
 
-    }
+        const errors = document.createElement('div');
+        errors.innerText = 'dadsa';
+        errors.id = 'photos-fields-errors';
+        errors.style.visibility = 'hidden';
 
-    validate() {
-        const length = Object.values(this.state.photos).filter(photo => photo.isFilled()).length;
-        if (length === 0) {
-            alert('Photo is required!');
-            throw new Error('At least one photo is required.')
-        }
+
+        div.append(this.photo_0.render('photo_0'))
+        div.append(this.photo_1.render('photo_1'))
+        div.append(this.photo_2.render('photo_2'))
+        div.append(this.photo_3.render('photo_3'))
+
+        conatiner.append(div);
+        conatiner.append(errors);
+
+        return conatiner;
     }
 }
 
+class TitleInput {
 
-class Upload {
+    showError() {
+        const error = document.getElementById('title-error-paragraph');
+        error.innerText = 'Title is required';
+        error.parentElement.style.visibility = 'visible';
+    }
 
-    state = {}
+    suppressError() {
+        const error = document.getElementById('title-error-paragraph');
+        error.parentElement.style.visibility = 'hidden';
+    }
+
+    onkeydown() {
+        this.suppressError();
+    }
+
+
+    renderErrorContainer() {
+        const div = document.createElement('div');
+        div.id = 'title-error-container';
+
+        const error_outline = document.createElement('i');
+        error_outline.id = 'error_outline';
+        error_outline.innerText = 'error_outline';
+        error_outline.className = 'material-icons';
+
+
+        const p = document.createElement('p');
+        p.id = 'title-error-paragraph'
+        p.innerText = 'error';
+
+        div.append(p);
+        div.append(error_outline);
+
+        return div;
+    }
+
+    render() {
+        const div = document.createElement('div');
+        div.className = 'Title-Field';
+
+        this.input = document.createElement('input');
+        this.input.placeholder = 'Title';
+        this.input.id = 'title-input';
+        this.input.name = 'title';
+        this.input.onkeydown = this.onkeydown.bind(this);
+
+        const label = document.createElement('label');
+        label.id = 'title-input';
+
+
+        div.append(this.input);
+        div.append(label);
+        div.append(this.renderErrorContainer());
+
+        return div;
+    }
+
+}
+
+class DescriptionInput {
+
+    render() {
+        const div = document.createElement('div');
+
+        this.textArea = document.createElement('textarea');
+        this.textArea.placeholder = 'Description';
+        this.textArea.id = 'description-area';
+        this.textArea.name = 'description';
+
+        const label = document.createElement('label');
+        label.id = 'description-area';
+
+        div.append(this.textArea);
+        div.append(label);
+
+        return div;
+    }
+
+}
+
+
+class UploadForm {
+
+    renderForm() {
+        const form = document.createElement('form');
+        form.action = 'upload';
+        form.method = 'POST';
+        form.onsubmit = this.onsubmit.bind(this);
+        return form;
+    }
+
+    renderTextInputs() {
+        const div = document.createElement('div');
+        div.className = 'Text-Inputs';
+
+        this.title = new TitleInput();
+        this.description = new DescriptionInput();
+
+        div.append(this.title.render());
+        div.append(this.description.render());
+
+        return div;
+    }
 
     renderSubmitButton() {
-        const input = document.createElement('input');
-        input.type = 'submit';
-        input.value = 'UPLOAD';
-        return input;
+        const submit = document.createElement('input');
+        submit.type = 'submit';
+        submit.value = 'UPLOAD';
+        return submit;
+    }
+
+    renderHeader() {
+        const h1 = document.createElement('h1');
+        h1.innerHTML = ' UPLOAD ITEM';
+        return h1;
+    }
+
+
+    renderMessageContainer() {
+        const div = document.createElement('div');
+        div.id = 'upload_status_bar';
+        const p = document.createElement('p');
+        p.textContent = 'message';
+        p.id = 'upload-form-result-message';
+        div.append(p)
+        return div;
+    }
+
+    showMessage(message, className) {
+        const p = document.getElementById('upload_status_bar');
+        p.innerText = message;
+        p.className = className;
+        this.message.style.visibility = 'visible';
     }
 
     render() {
-        this.self = document.createElement('form');
-        this.self.method = 'POST';
-        this.self.action = '/upload';
+        const form = this.renderForm();
+
+        this.h1 = this.renderHeader();
+        form.append(this.h1);
+
+        this.textInputs = this.renderTextInputs();
+        form.append(this.textInputs);
+
+        this.photosInputs = new PhotosInputs();
+        form.append(this.photosInputs.render());
+
+        this.map = new Mapbox();
+        form.append(this.map.render());
 
 
-        const h1 = document.createElement('h1');
-        h1.innerText = 'UPLOAD ITEM';
 
-        const title = new Title();
-        const description = new Description();
-        const photos = new Photos();
-        const submit = this.renderSubmitButton();
-        const map = new Mapbox();
+        this.message = this.renderMessageContainer();
+        form.append(this.message);
 
 
-        this.self.append(submit);
-        this.self.append(map.render());
-        this.self.append(photos.render());
-        this.self.append(description.render());
-        this.self.append(title.render());
-        this.self.append(h1);
-
-
-        this.self.onsubmit = (event) => this.onsubmit(event, title, description, map, photos);
-
-        return this.self;
+        this.submit = this.renderSubmitButton();
+        form.append(this.submit);
+        return form;
     }
 
+    async onsubmit(event) {
 
-    async onsubmit(event, title, description, map, photos) {
-
-        const errors = [];
+        // We have to synchronize all inputs with form, each input will implements own validation, and when
+        // form will be submit informs inputs and asks for values of inputs.
 
         event.preventDefault();
 
-        try {
-            title.validate();
-        } catch (error) {
-            errors.push(error.message);
+        // Parsing:
+        const formData = new FormData(event.target);
+
+        const title = formData.get('title');
+        const description = formData.get('description');
+
+        const photos = [
+            formData.get('photo_0'),
+            formData.get('photo_1'),
+            formData.get('photo_2'),
+            formData.get('photo_3')
+        ].filter(photo => photo.size > 0);
+
+        const position = this.map.getPosition();
+
+        // Validating:
+
+        const errors = [];
+
+        if (position === null) {
+            errors.push('Position is required.');
+            this.map.showError('Position is required');
         }
 
-        try {
-            photos.validate();
-        } catch (error) {
-            errors.push(error.message);
+
+        if (title === '') {
+            errors.push('Title is required.');
+            this.title.showError('Title is required');
         }
 
-        try {
-            map.validate();
-        } catch (error) {
-            errors.push(error.message)
+        if (photos.length === 0) {
+            errors.push('At least one photo is required.')
+            this.photosInputs.showError('At least one photo is required.');
         }
+
+        // Preparing and sending:
 
         if (errors.length === 0) {
-            alert('Poszło :)')
-            const formData = new FormData(event.target);
-            const longitude = map.coords[0];
-            const latitude = map.coords[1];
 
-            formData.append('longitude', longitude);
-            formData.append('latitude', latitude);
+            const validFormData = new FormData();
 
-            const response = await this.send(formData);
-            alert(response);
+
+            validFormData.append('title', title);
+            validFormData.append('description', description);
+            photos.forEach((photo, index) => validFormData.append(`photo_${index}`, photo));
+
+            validFormData.append('longitude', position[0]);
+            validFormData.append('latitude', position[1]);
+
+            const response = await fetch('/upload', {
+                method: 'POST',
+                body: validFormData
+            });
+
+
+            if (response.ok) {
+                this.showMessage('ITEM UPLOADED SUCCESSFULLY', 'status-success');
+                event.target.reset();
+            } else
+                this.showMessage('SOMETHING GOES WRONG', 'status-success');
+
         }
 
-    }
 
-    async send(data) {
-
-        console.log(data);
-
-        return fetch('/upload', {
-            method: 'POST',
-            body: data
-        })
     }
 
 

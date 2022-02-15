@@ -10,6 +10,23 @@
     margin: 0;
 }
 
+body {
+    width: 100%;
+    background-color: #fafafa;
+}
+
+nav {
+    width: 100%;
+    background-color: white;
+}
+
+main {
+    width: 100%;
+    min-height: calc(100vh + 30rem);
+
+}
+
+
 /* Animation: */
 #load-animation {
     width: 4rem;
@@ -17,7 +34,7 @@
 
     position: absolute;
     left: calc(50% - 2rem);
-    top: calc(50vh - 2rem);
+    top: calc(50vh - 2rem)
 }
 
 #load-animation div {
@@ -30,6 +47,86 @@
     animation-iteration-count: infinite;
 }
 
+.Displaying-Menu {
+    width: 100%;
+    height: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+
+    position: relative;
+    margin: 1rem 0;
+}
+
+.Displaying-Menu .Sorting-Menu {
+    min-width: 15rem;
+    width: max-content;
+
+    position: absolute;
+    margin: 0rem 2rem;
+    cursor: pointer;
+
+    padding: 1rem;
+
+}
+
+.Sorting-Menu div:first-child {
+    padding: 0.3rem;
+}
+
+.Sorting-Menu > div {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.Sorting-Menu > div > div {
+    font-size: 0.6rem;
+}
+
+.expand_more {
+    position: absolute;
+    z-index: 2;
+    right: 1rem;
+}
+
+.Sorting-Menu .Sorting-Options {
+    visibility: hidden;
+    position: absolute;
+    height: max-content;
+
+}
+
+.Sorting-Menu:hover {
+    height: max-content;
+
+}
+
+.Sorting-Menu:hover .Sorting-Options {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    visibility: visible;
+
+    transition-property: visibility;
+    transition-duration: 2s;
+    transition-timing-function: ease-in-out;
+}
+
+
+.Sorting-Menu .Sorting-Options > div {
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem 0;
+}
+
+.Sorting-Menu .Sorting-Options > div:hover {
+    box-shadow: 1px 1px 5px #2d2d2d;
+    width: 100%;
+}
 
 @keyframes waiting {
 
@@ -73,6 +170,11 @@ a {
     color: #2d2d2d;
 }
 
+footer {
+    width: 100%;
+    height: 20rem;
+    background-color: #2d2d2d;
+}
 
 /* Anchor that is inside nav and redirect users to their cockpit. */
 nav #cockpit-anchor {
@@ -131,10 +233,28 @@ nav h1 {
 
     padding: 1rem;
 
+    position: relative;
+    z-index: 1;
+
+    overflow: hidden;
+
+}
+
+.Item img {
+    position: absolute;
+    left: 0;
+    top:0;
+    width: 100%;
+    height: 100%;
+}
+
+.Item:hover {
+
 }
 
 .Item-Title {
     grid-area: title;
+    font-size: 0.8rem;
 }
 
 .Item-Localization {
@@ -171,6 +291,7 @@ nav h1 {
         z-index: 1;
 
         background-color: white;
+        width: 100%;
     }
 
     nav #cockpit-anchor i {

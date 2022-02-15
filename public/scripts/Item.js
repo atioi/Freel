@@ -1,10 +1,12 @@
 class Item {
+
     #id;
 
-    constructor(id, title, coords, description) {
+    constructor(id, title, coords, description, photos) {
         this.#id = id;
         this.title = title;
         this.localization = new Localization(coords[0], coords[1]);
+        this.photos = photos;
     }
 
     renderTitle(title) {
@@ -62,6 +64,11 @@ class Item {
     render() {
         const div = document.createElement('div');
         div.className = 'Item';
+
+        const img = document.createElement('img');
+        img.src = this.photos[0];
+
+        div.append(img);
 
         div.append(this.renderTitle(this.title));
         div.append(this.renderLocalization());

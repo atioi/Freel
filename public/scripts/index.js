@@ -1,27 +1,5 @@
 const root = document.getElementById('root');
 
-const cookies = {};
-document.cookie.split(';').forEach(cookie => {
-    cookies[cookie.trim().split('=')[0]] = decodeURIComponent(cookie.trim().split('=')[1]);
-});
-
-
-const avatar = document.getElementById('cockpit-anchor');
-
-function setAvatar() {
-    if (cookies.color !== undefined) {
-        avatar.getElementsByTagName('i').item(0).remove();
-        avatar.style.backgroundColor = `${cookies.color}`;
-        avatar.innerText = cookies.name.charAt(0);
-
-    } else {
-
-    }
-}
-
-setAvatar();
-
-
 /* Animation: */
 const animation = document.createElement('div');
 animation.append(document.createElement('div'));
@@ -38,10 +16,17 @@ async function fetchItems() {
 
     const data = await response.json()
 
+    console.log(data);
+
     return data
-        .map(item => new Item(item['id'], item['title'], item['coords'], item['description']));
+        .map(item => new Item(item['id'], item['title'], item['coords'], item['description'], item['photos']));
 
 }
+
+
+
+// const sorting_menu = document.getElementById('sorting-menu');
+// sorting_menu.append();
 
 
 fetchItems()

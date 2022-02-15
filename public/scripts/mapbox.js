@@ -11,11 +11,7 @@ class Mapbox {
 
     constructor() {
 
-        this.map_wrapper = document.createElement('div');
-        this.map_wrapper.id = 'map'
-
-        // This allow mapbox to find map_wrapper;
-        document.body.append(this.map_wrapper);
+        this.map_wrapper = this.renderMapWrapper();
 
         this.run();
     }
@@ -23,6 +19,8 @@ class Mapbox {
     render() {
         return this.map_wrapper;
     }
+
+
 
     run() {
         /*
@@ -86,33 +84,77 @@ class Mapbox {
         this.#decoder.on('result', (result) => this.decode(result));
     }
 
-    renderErrorMessage() {
-        const p = document.createElement('p');
-        p.className = 'Error-Message';
-        p.innerText = '*Set item localization.';
-        return p;
-    }
-
-    validate() {
-        if (this.coords === null) {
-            alert('coors cannot be null');
-            throw  new Error('Coords are not set');
-        }
-    }
 
     decode(result) {
+        this.suppressError();
         this.coords = result.result.geometry.coordinates;
         this.#marker.setLngLat(this.coords).addTo(this.#map);
     }
 
     drag(position) {
+        this.suppressError();
         this.coords = [this.#marker.getLngLat().lng, this.#marker.getLngLat().lat]
     }
 
     geolocate(position) {
+        this.suppressError();
         this.coords = [position.coords.longitude, position.coords.latitude];
         this.#marker.setLngLat(this.coords).addTo(this.#map);
     }
 
+    // The code below is rock-solid:
+
+    // Map:
+
+    renderMapWrapper() {
+        const div = document.createElement('div');
+        div.className = 'Map-Container';
+
+        const map = document.createElement('div');
+        map.id = 'map';
+
+        div.append(map);
+        div.append(this.renderErrorMessageContainer());
+
+        document.body.append(div);
+
+        return div;
+    }
+
+    //  Error communicator :
+
+    renderErrorMessageContainer() {
+        const div = document.createElement('div');
+        div.className = 'Map-Error-Container';
+
+        const p = document.createElement('p');
+        p.id = 'map-error-paragraph';
+        p.innerText = 'error';
+
+        const error_outline = document.createElement('i');
+        error_outline.id = 'error_outline';
+        error_outline.innerText = 'error_outline';
+        error_outline.className = 'material-icons';
+
+        div.append(p);
+        div.append(error_outline);
+
+        return div;
+    }
+
+    showError(error) {
+        const p = document.getElementById('map-error-paragraph');
+        p.innerText = error;
+        p.parentElement.style.visibility = 'visible';
+    }
+
+    suppressError() {
+        const p = document.getElementById('map-error-paragraph');
+        p.parentElement.style.visibility = 'hidden';
+    }
+
+    getPosition() {
+        return this.coords;
+    }
 
 }

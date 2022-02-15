@@ -78,6 +78,8 @@ class UserRepository extends Repository
 
     public function savePhoto($url, $iid)
     {
+
+
         $stmt_2 = $this->database->connect()->prepare('
             INSERT INTO photos (url, item) VALUES(?, ?);  
         ');
@@ -203,6 +205,16 @@ class UserRepository extends Repository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
+    public function fetchPhotos($item_id)
+    {
+        $stmt = $this->database->connect()->prepare('
+            SELECT url FROM items_photos WHERE item = :item_id ;
+        ');
+        $stmt->bindParam(':item_id', $item_id);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     # Item buying:
     public function buyItem($item_id, $user_id)

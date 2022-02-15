@@ -27,6 +27,9 @@
 <footer>
 
 </footer>
+
+
+
 <script src="/public/scripts/Localization.js"></script>
 <script src="/public/scripts/Item.js"></script>
 <script src="/public/scripts/index.js"></script>
