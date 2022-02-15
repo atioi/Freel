@@ -23,6 +23,25 @@
 </head>
 <body>
 
+
+<nav id="navigation">
+    <div class="Cockpit-Menu-Option" id="return-menu-option"><i class="material-icons">keyboard_backspace</i></div>
+
+    <div class="Avatar" id="avatar"></div>
+
+    <div class="Cockpit-Menu-Option" id="dashboard-menu-option"><i class="material-icons">dashboard</i>
+        <p class="Option">DASHBOARD</p></div>
+    <div class="Cockpit-Menu-Option" id="upload-menu-option"><i class="material-icons">file_upload</i>
+        <p class="Option">UPLOAD</p></div>
+    <div class="Cockpit-Menu-Option" id="cart-menu-option"><i class="material-icons">shopping_bag</i>
+        <p class="Option">CART</p></div>
+    <div class="Cockpit-Menu-Option" id="logout-menu-option"><i class="material-icons">logout</i>
+        <p class="Option">LOGOUT</p></div>
+</nav>
+<main>
+    <div id="root"></div>
+</main>
+
 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
 <link rel="stylesheet"
       href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css"

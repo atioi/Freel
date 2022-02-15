@@ -75,34 +75,21 @@ class UserRepository extends Repository
 
     }
 
-    /**
-     * @throws Exception
-     */
-    public function saveItem($uid, Item $item)
+
+    public function savePhoto($url, $iid)
     {
-        $stmt = $this->database->connect()->prepare('
-            INSERT INTO items (user_id, title, description) VALUES(?, ?, ?);
+
+
+        $stmt_2 = $this->database->connect()->prepare('
+            INSERT INTO photos (url, item) VALUES(?, ?);  
         ');
 
-
-        try {
-
-            $stmt->execute([
-                $uid,
-                $item->getTitle(),
-                $item->getDescription()
-            ]);
-
-        } catch (PDOException $exception) {
-
-            # This should never happen.
-            if ($exception->getCode() == 23503)
-                die();
-
-            throw new Exception("Database error");
-        }
-
+        $stmt_2->execute([
+            $url,
+            $iid
+        ]);
     }
+
 
     /**
      * @throws Exception
@@ -154,8 +141,99 @@ class UserRepository extends Repository
     }
 
 
-    public function fetch_item()
+
+    # Item uploading:
+
+    /**
+     * @throws Exception
+     */
+    public function saveItem($uid, Item $item)
     {
+
+        $stmt = $this->database->connect()->prepare('SELECT add_item(:title, :description, :longitude, :latitude, :user_id);');
+
+        # Coordinates:
+        $longitude = $item->getLocalization()['longitude'];
+        $latitude = $item->getLocalization()['latitude'];
+
+        $title = $item->getTitle();
+        $description = $item->getDescription();
+
+        $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':longitude', $longitude);
+        $stmt->bindParam(':latitude', $latitude);
+        $stmt->bindParam(':user_id', $uid);
+
+
+        $stmt->execute();
+        $result = $stmt->fetch();
+
+        if (!key_exists('add_item', $result))
+            throw new Exception('Item ID could not be fetched properly.');
+
+        return $result['add_item'];
+
+    }
+
+    # Item's photo uploading:
+    public function saveItemPhoto($item_id, $path)
+    {
+        $stmt = $this->database->connect()->prepare('
+            INSERT INTO items_photos (item, url) VALUES(?, ?);
+        ');
+
+        $stmt->execute([
+            $item_id,
+            $path
+        ]);
+    }
+
+
+    # Item fetching:
+
+    public function fetchItems($item_id = -1, $amount = 30)
+    {
+        $stmt = $this->database->connect()->prepare('
+            select * from fetchitems(:last, :amount);
+        ');
+
+        $stmt->bindParam(':last', $item_id);
+        $stmt->bindParam(':amount', $amount);
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    public function fetchPhotos($item_id)
+    {
+        $stmt = $this->database->connect()->prepare('
+            SELECT url FROM items_photos WHERE item = :item_id ;
+        ');
+        $stmt->bindParam(':item_id', $item_id);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    # Item buying:
+    public function buyItem($item_id, $user_id)
+    {
+
+        $stmt = $this->database->connect()->prepare('
+            CALL buy(:item_id, :user_id)
+        ');
+
+        $stmt->bindParam(':item_id', $item_id);
+        $stmt->bindParam(':user_id', $user_id);
+
+        try {
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            http_response_code(400);
+            die();
+        }
 
     }
 

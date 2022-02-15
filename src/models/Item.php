@@ -16,6 +16,11 @@ class Item
         $this->photos = $photos;
     }
 
+    public function setPhotos($photos)
+    {
+        $this->photos = $photos;
+    }
+
     /**
      * @return mixed
      */

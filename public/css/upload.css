@@ -1,224 +1,262 @@
-/* Every style must be preceded by .Dashboard class */
+* {
+    box-sizing: border-box;
+}
+
+.Upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow: auto;
+    height: max-content;
+}
 
 
-.Dashboard {
+form {
+    height: max-content;
+    width: fit-content;
+    max-width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    padding: 5rem 1rem 10rem 1rem;
+}
+
+form h1 {
+    font-size: 2.5rem;
+    font-weight: 500;
+
+    margin: 2rem auto;
+}
+
+
+/* | Text inputs: */
+
+.Text-Inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    gap: 1rem
+}
+
+.Text-Inputs > div {
+    height: max-content;
+    overflow: hidden;
+}
+
+#description-area {
+    resize: none;
+    width: 100%;
+    height: 5rem;
+
+    padding: 0.4rem 1rem;
+    outline: none;
+}
+
+#title-input {
+    padding: 0.4rem 1rem;
+    outline: none;
+}
+
+@media only screen and (max-width: 700px) {
+    #title-input {
+        width: 100%;
+    }
+}
+
+
+#title-error-container {
+    visibility: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .2rem;
+}
+
+#title-error-container i {
+    color: red;
+    transform: scale(0.5);
 
 }
+
+#title-error-paragraph {
+    color: red;
+    font-size: .6rem;
+}
+
+
+/* | Photos inputs: */
+.Photos-Fields {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    padding: 1rem 0;
+
+    max-width: max-content;
+    width: 100%;
+
+    gap: 1rem;
+}
+
+.Photo-Field {
+    width: 10rem;
+    height: 15rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 1px 1px 5px #2d2d2d;
+
+    position: relative;
+    cursor: pointer;
+
+    overflow: hidden;
+}
+
+.photo_state_icon {
+    position: absolute;
+    transform: scale(4);
+}
+
+.add_photo_alternate {
+    color: rgba(128, 128, 128, 0.2);
+}
+
+.delete_outline {
+    color: rgba(255, 0, 0, 0.2);
+}
+
+.Photo-Field:hover .add_photo_alternate {
+    color: rgba(128, 128, 128, 0.4);
+}
+
+
+.Photo-Field:hover .delete_outline {
+    color: rgba(255, 0, 0, 0.4);
+}
+
+
+.Photo-Field img {
+    width: 100%;
+    height: 100%;
+}
+
+.Photo-Input, .Photo-Label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    visibility: hidden;
+}
+
+
+/* | MAP: */
+.Map-Container {
+    width: 100%;
+    min-height: 23rem;
+}
+
+#map {
+    width: 100%;
+    height: 20rem;
+}
+
+
+.Map-Error-Container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    gap: 0.2rem;
+    width: max-content;
+    visibility: hidden;
+
+}
+
+.Map-Error-Container #error_outline {
+    color: red;
+    transform: scale(0.5);
+}
+
+.Map-Error-Container #map-error-paragraph {
+    color: red;
+    font-size: .6rem;
+}
+
+#upload_status_bar {
+    width: 100%;
+    height: max-content;
+    text-align: center;
+}
+
+#upload_status_bar p {
+    visibility: hidden;
+    font-size: 0.6rem;
+    min-height: 1rem;
+}
+
+.status-success {
+    color: green;
+}
+
+.status-error {
+    color: red;
+}
+
+form input[type='submit'] {
+    width: 30%;
+    margin: auto;
+    padding: 0.4rem 1rem;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: #2d2d2d;
+    box-shadow: 1px 2px 5px #2d2d2d;
+    cursor: pointer;
+}
+
+
+form input[type='submit']:hover {
+
+    box-shadow: 1px 2px 6px #2d2d2d;
+    background-color: #1e1e1e;
+
+}
+
+#photos-fields-errors {
+    color: red;
+    font-size: .6rem;
+}
+
 
 @media only screen and (max-width: 400px) {
-
-    .Upload form h1 {
-
-        margin: 3rem 0;
-        font-size: 2rem;
-        font-weight: 500;
-
-    }
-
-    .Upload {
-
-        padding: 0.5rem 0;
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        overflow-y: scroll;
-        overflow-x: hidden;
-
-        width: 100vw;
-
-        background-color: transparent;
-        margin: 0.1rem 0;
-    }
-
-    .Upload form {
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: center;
-
-        max-width: 100%;
+    form input[type='submit'] {
         width: max-content;
-        padding: 2rem 1rem;
     }
 
-    .Upload form .Title-Wrapper {
-        margin: 1rem;
-
-        position: relative;
-
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-
-        width: 100%;
+    form h1 {
+        font-size: 2rem;
     }
 
-    .Title-Wrapper #error_outline {
-        position: absolute;
-        right: .5rem;
-        color: red;
-        visibility: hidden;
+    #map {
+        margin: 0;
     }
 
-    .Title-Wrapper .Error {
-        border: 1px solid red;
-    }
 
-    .Title-Wrapper .Error::placeholder {
-        color: red;
-    }
-
-    .Title-Wrapper input {
-        outline: none;
-        width: 100%;
-        padding: 0.4rem 2rem 0.4rem 1rem;
-    }
-
-    .Description-Wrapper {
-
-        width: 100%;
+    .Photo-Field {
+        width: 7rem;
         height: 10rem;
     }
 
-    .Description-Wrapper textarea {
-        resize: none;
-        width: 100%;
-        height: 100%;
-        outline: none;
-        padding: 0.4rem 1rem;
+    .Photos-Fields {
+        gap: 1rem;
     }
-
-
-    .Photos {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-
-        width: 100%;
-
-        margin: 1rem 0;
-    }
-
-    .Photo {
-        width: 48%;
-        min-width: 7rem;
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-
-        border-radius: .5rem;
-
-        height: 10rem;
-        position: relative;
-        z-index: 0;
-
-        overflow: hidden;
-
-        background-color: white;
-        box-shadow: 1px 1px 5px #2d2d2d;
-
-        margin: 0.5rem 0;
-
-    }
-
-    .Photo i {
-        transform: scale(2);
-    }
-
-
-    .Photo img {
-        position: absolute;
-        z-index: -1;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-
-        filter: brightness(0.5);
-    }
-
-    .Photo label {
-        display: none;
-    }
-
-    .Photo input {
-        display: none;
-    }
-
-    .Upload input[type='submit'] {
-
-        margin: 2rem 0;
-
-        width: 100%;
-        padding: 0.4rem;
-        background-color: #2d2d2d;
-        color: white;
-        outline: none;
-        border: none;
-
-        box-shadow: 1px 1px 5px #2d2d2d;
-    }
-
-
 }
 
-@media only screen and (min-width: 1024px) {
-
-    .Photos {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-
-    /* Photo: */
-    .Photo {
-        width: 10rem;
-        height: 15rem;
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        background-color: white;
-        box-shadow: 2px 2px 5px #2d2d2d;
-        border-radius: .5rem;
-
-        position: relative;
-        z-index: 0;
-
-        margin: 1rem;
-
-        cursor: pointer;
-    }
-
-    .Photo img {
-        position: absolute;
-        z-index: -1;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    .Photo:hover {
-        box-shadow: 5px 5px 8px #2d2d2d;
-    }
-
-
-    .Photo label {
-        visibility: hidden;
-    }
-
-    .Photo input {
-        visibility: hidden;
-    }
-
-
-}
